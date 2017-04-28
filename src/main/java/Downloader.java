@@ -1,8 +1,10 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 
 /**
  * Created by kokoghlanian on 27/04/2017.
@@ -10,51 +12,32 @@ import java.net.URLConnection;
 public class Downloader {
     public static void getFile(String host,String fileName)
     {
-        InputStream input = null;
-        FileOutputStream writeFile = null;
+        URLConnection website = null;
+       try {
+            File file = new File(fileName);
+            System.out.println(file.length()+" 0");
+           website = new URL(host).openConnection();
+            if(file.exists())
+                website.setRequestProperty("Range", "bytes=" + file.length() + "-");
+            FileChannel download = new FileOutputStream(file,file.exists()).getChannel();
 
-        try
-        {
-            URL url = new URL(host);
-            URLConnection connection = url.openConnection();
-            int fileLength = connection.getContentLength();
 
-            if (fileLength == -1)
-            {
-                System.out.println("Invalide URL or file.");
-                return;
-            }
+            ReadableByteChannel rbc = Channels.newChannel(website.getInputStream());
 
-            input = connection.getInputStream();
-            writeFile = new FileOutputStream(fileName);
-            byte[] buffer = new byte[1024];
-            int read;
 
-            while ((read = input.read(buffer)) > 0)
-                writeFile.write(buffer, 0, read);
-            writeFile.flush();
-        }
-        catch (IOException e)
-        {
-            System.out.println("Error while trying to download the file.");
+           download.transferFrom(rbc, file.length(), Long.MAX_VALUE);
+    } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        finally
-        {
-            try
-            {
-                writeFile.close();
-                input.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
+
     }
 
     public static void main(String[] args)
     {
-        getFile("https://1fichier.com/?ihfpooe1vm","screen.jpg");
+        getFile("http://www7.uptobox.com/d/vay62japhsr76xkqugcmobreou4nigqeinigtpzdsl6ajlheroriiskycj3zpwjzrge3kont4tcqrjqeve/Lion.2016.FRENCH.BRRip.XviD-NEWCiNE-WwW.Zone-Telechargement.Ws.avi","screen.jpg");
     }
 }
