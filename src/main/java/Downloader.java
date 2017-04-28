@@ -7,8 +7,8 @@ import java.net.URLConnection;
 /**
  * Created by kokoghlanian on 27/04/2017.
  */
-public class Main {
-    public static void getFile(String host)
+public class Downloader {
+    public static void getFile(String host,String fileName)
     {
         InputStream input = null;
         FileOutputStream writeFile = null;
@@ -26,7 +26,6 @@ public class Main {
             }
 
             input = connection.getInputStream();
-            String fileName = url.getFile().substring(url.getFile().lastIndexOf('/') + 1);
             writeFile = new FileOutputStream(fileName);
             byte[] buffer = new byte[1024];
             int read;
@@ -56,8 +55,6 @@ public class Main {
 
     public static void main(String[] args)
     {
-
-
-        getFile("http://www20.uptobox.com/d/wuysecykhsr76xkqdomz6wrvevi2crzw4f4hhskwc2kligurgoxr7g6lt64wotflyan7xlebkrg7bt4dd4/screen.jpg");
+        getFile("https://1fichier.com/?ihfpooe1vm","screen.jpg");
     }
 }
