@@ -1,3 +1,9 @@
+package Download;
+
+import com.sun.javafx.tk.Toolkit;
+import javafx.concurrent.Task;
+import javafx.scene.control.ProgressIndicator;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,10 +16,16 @@ import java.util.Scanner;
 /**
  * Created by kokoghlanian on 27/04/2017.
  */
-public class Downloader implements Runnable{
-    String directory;
-    String fileName;
-    String host;
+public class Downloader extends Task<Void>{
+    private String directory;
+    private String fileName;
+    private String host;
+    private File file;
+    private Double size;
+
+    public Double getSize() {
+        return size;
+    }
 
     public Downloader(String directory, String fileName, String host) {
         this.directory = directory;
@@ -21,15 +33,29 @@ public class Downloader implements Runnable{
         this.host = host;
     }
 
+    @Override
+    protected Void call() throws Exception {
+
+        getFile();
+        this.updateProgress(file.length(), 1);
+        this.updateMessage(this.fileName);
+        //this.
+        return null;
+    }
+
     public void getFile()
     {
-        File file = new File(directory+"/"+fileName);
+        this.file = new File(directory+"/"+fileName);
         URLConnection website = null;
         String filePath= directory.equals("")?fileName:directory+"/"+fileName;
        try {
 
            website = new URL(host).openConnection();
-           if(file.length() != website.getContentLengthLong()){
+           Long contentLength = website.getContentLengthLong();
+
+           this.size = Double.longBitsToDouble(contentLength);
+
+           if(file.length() != contentLength){
             if(file.exists()) {
                 website.setRequestProperty("Range", "bytes=" + file.length() + "-");
             }
@@ -48,9 +74,8 @@ public class Downloader implements Runnable{
         }
 
     }
-    public void run() {
-        getFile();
-    }
+
+
     public static void main(String[] args)
     {
         System.out.println("Entrez stop pour arreter le programme (cela ne stopera pas le téléchargement de vos fichier)");
