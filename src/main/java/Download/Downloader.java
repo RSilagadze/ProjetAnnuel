@@ -1,24 +1,17 @@
 package Download;
 
-import com.sun.javafx.tk.Toolkit;
 import javafx.concurrent.Task;
-import javafx.scene.control.ProgressIndicator;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Created by kokoghlanian on 27/04/2017.
  */
-public class Downloader implements Runnable{
+public class Downloader extends Task<Void> {
+
     private String directory;
     private String fileName;
     private String host;
@@ -37,19 +30,20 @@ public class Downloader implements Runnable{
         this.host = host;
     }
 
-    public void run() {
+    public Void call() {
         try {
+
+            this.updateMessage(this.fileName);
             downloadFile(host,directory);
         } catch (IOException e) {
             e.printStackTrace();
         }
-   /*     this.updateProgress(file.length(), 1);
-        this.updateMessage(this.fileName);
+        this.updateProgress(file.length(), 1);
         //this.
-        return null;*/
+        return null;
     }
 
-    public  void downloadFile(String fileURL, String saveDir)
+    public void downloadFile(String fileURL, String saveDir)
             throws IOException {
         URL url = new URL(fileURL);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -61,6 +55,7 @@ public class Downloader implements Runnable{
             String disposition = httpConn.getHeaderField("Content-Disposition");
             String contentType = httpConn.getContentType();
             int contentLength = httpConn.getContentLength();
+            this.size = Double.valueOf(contentLength);
             for(String s : httpConn.getHeaderFields().keySet()){
                 System.out.println("Fields : "+s+"   "+httpConn.getHeaderFields().get(s));
             }
@@ -87,15 +82,18 @@ public class Downloader implements Runnable{
 
             // opens input stream from the HTTP connection
             InputStream inputStream = httpConn.getInputStream();
-            String saveFilePath = saveDir + File.separator + fileName;
+            String saveFilePath = saveDir + File.separator + this.fileName;
 
             // opens an output stream to save into file
             FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
             int bytesRead = -1;
+            int totalBytes = 0;
             byte[] buffer = new byte[BUFFER_SIZE];
             while ((bytesRead = inputStream.read(buffer)) != -1) {
-                //fou ton update a la con
+                totalBytes += bytesRead;
+                System.out.println(totalBytes);
+                this.updateProgress(totalBytes,contentLength);
                 outputStream.write(buffer, 0, bytesRead);
             }
 

@@ -61,7 +61,6 @@ public class MainWindowController implements Initializable{
 
     public void launchDownload(Downloader downloader) {
 
-
         downloadTab.getItems().add(downloader);
 
         ExecutorService executor = Executors.newFixedThreadPool(downloadTab.getItems().size(), new ThreadFactory() {
