@@ -38,12 +38,10 @@ public class Downloader extends Task<Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.updateProgress(file.length(), 1);
-        //this.
         return null;
     }
 
-    public void downloadFile(String fileURL, String saveDir)
+    private void downloadFile(String fileURL, String saveDir)
             throws IOException {
         URL url = new URL(fileURL);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();

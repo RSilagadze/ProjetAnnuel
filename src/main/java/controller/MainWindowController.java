@@ -1,15 +1,15 @@
 package controller;
 
 import Download.Downloader;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -42,7 +42,15 @@ public class MainWindowController implements Initializable{
     MenuItem addLinkMenuItem;
 
     @FXML
-    protected  void handleAddLinkMenuItemOnClick(ActionEvent event){
+    ToggleButton pauseButton;
+
+    @FXML
+    ToggleButton playToggleButton;
+
+    private Downloader selectedTask;
+
+    @FXML
+    protected void handleAddLinkMenuItemOnClick(ActionEvent event){
 
         try {
 
@@ -57,6 +65,22 @@ public class MainWindowController implements Initializable{
             System.out.println("Impossible d'afficher la linkPage");
             e.printStackTrace();
         }
+    }
+
+
+    @FXML
+    protected void handlePauseItemButtonOnClick(ActionEvent event){
+        try {
+            this.selectedTask.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    protected void handleResumeItemButtonOnClick(ActionEvent event){
+        this.selectedTask.run();
     }
 
     public void launchDownload(Downloader downloader) {
@@ -79,9 +103,17 @@ public class MainWindowController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         ControllerMediator.getInstance().registerMainWindowController(this);
+        pauseButton.disableProperty().bind(Bindings.isEmpty(downloadTab.getSelectionModel().getSelectedItems()));
 
+        //downloadTab.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        downloadTab.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        downloadTab.getSelectionModel().selectedItemProperty().addListener(new ChangeListener(){
+
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                selectedTask = downloadTab.getSelectionModel().getSelectedItem();
+            }
+        });
+
 
         //bind sur les getter de la classe downloader.
         sizeCol.setCellValueFactory(new PropertyValueFactory<Downloader, Double>(
