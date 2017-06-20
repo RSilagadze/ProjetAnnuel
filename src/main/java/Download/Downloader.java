@@ -54,6 +54,10 @@ public class Downloader extends Task<Void> {
             String contentType = httpConn.getContentType();
             int contentLength = httpConn.getContentLength();
             this.size = Double.valueOf(contentLength);
+            if(contentLength==-1&&httpConn.getHeaderField("Content-Disposition")!=null){
+                size=Double.valueOf(httpConn.getHeaderField("Content-Length"));
+                contentLength = size.intValue();
+            }
             for(String s : httpConn.getHeaderFields().keySet()){
                 System.out.println("Fields : "+s+"   "+httpConn.getHeaderFields().get(s));
             }
