@@ -12,6 +12,7 @@ import java.net.URLConnection;
  */
 public class Downloader extends Task<Void> {
 
+    private volatile boolean suspended = false;
     private String directory;
     private String fileName;
     private String host;
@@ -30,13 +31,39 @@ public class Downloader extends Task<Void> {
         this.host = host;
     }
 
-    public Void call() {
-        try {
+    public void suspend(){
+        suspended = true;
+    }
 
-            this.updateMessage(this.fileName);
-            downloadFile(host,directory);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void resume(){
+        suspended = false;
+        synchronized (this) {
+            this.notifyAll();
+        }
+    }
+
+    public Void call() {
+
+        this.updateMessage(this.fileName);
+        while(!Thread.currentThread().isInterrupted()){
+            if(!suspended){
+                try {
+                    downloadFile(host,directory);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                try {
+                    while(suspended){
+                        synchronized(this){
+                            this.wait();
+                        }
+                    }
+                }
+                catch (InterruptedException e) {
+                }
+            }
         }
         return null;
     }
@@ -53,10 +80,9 @@ public class Downloader extends Task<Void> {
             String disposition = httpConn.getHeaderField("Content-Disposition");
             String contentType = httpConn.getContentType();
             int contentLength = httpConn.getContentLength();
-            this.size = Double.valueOf(contentLength);
             if(contentLength==-1&&httpConn.getHeaderField("Content-Disposition")!=null){
-                size=Double.valueOf(httpConn.getHeaderField("Content-Length"));
-                contentLength = size.intValue();
+                this.size=Double.valueOf(httpConn.getHeaderField("Content-Length"));
+                contentLength = this.size.intValue();
             }
             for(String s : httpConn.getHeaderFields().keySet()){
                 System.out.println("Fields : "+s+"   "+httpConn.getHeaderFields().get(s));
@@ -92,10 +118,10 @@ public class Downloader extends Task<Void> {
             int bytesRead = -1;
             int totalBytes = 0;
             byte[] buffer = new byte[BUFFER_SIZE];
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
+            while ((bytesRead = inputStream.read(buffer)) != -1 && !suspended) {
                 totalBytes += bytesRead;
-                System.out.println(totalBytes);
                 this.updateProgress(totalBytes,contentLength);
+                System.out.println(totalBytes);
                 outputStream.write(buffer, 0, bytesRead);
             }
 
@@ -108,32 +134,5 @@ public class Downloader extends Task<Void> {
         }
         httpConn.disconnect();
     }
-
-
-    public static void main(String[] args)
-    {
-     /*  System.out.println("Entrez stop pour arreter le programme (cela ne stopera pas le téléchargement de vos fichier)");
-        Scanner sc = new Scanner(System.in);
-        String enter = "";
-        while (!enter.equalsIgnoreCase("stop")) {
-            System.out.println("Enter the directory, the file name and the download link separated by a space");
-            enter=sc.nextLine();
-            if(!enter.equalsIgnoreCase("stop")) {
-                Downloader downloader = new Downloader(enter.split(" ")[0], enter.split(" ")[1], enter.split(" ")[2]);
-                Thread t = new Thread(downloader);
-                t.start();
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }*/
-     Downloader d = new Downloader("C:\\Users\\Nicolas\\Desktop","","http://www20.uptobox.com/d/wuys64fkhsr76xkqbcppe3tffzsrktt5tmvjgcdezyjmtnbyn3jjojyl6mztumjdzpiank6e5tuldza/Beauty.and.the.Beast.2017.FRENCH.BRRip.XviD-NEWCiNE-WwW.Zone-Telechargement.Ws.avi");
-     Thread t= new Thread(d);
-     t.start();
-
-    }
-
 
 }

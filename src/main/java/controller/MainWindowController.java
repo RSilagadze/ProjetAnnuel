@@ -19,9 +19,12 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 
 public class MainWindowController implements Initializable{
@@ -48,6 +51,7 @@ public class MainWindowController implements Initializable{
     ToggleButton playToggleButton;
 
     private Downloader selectedTask;
+    private List<Future<?>> future = new ArrayList<Future<?>>();
 
     @FXML
     protected void handleAddLinkMenuItemOnClick(ActionEvent event){
@@ -70,17 +74,13 @@ public class MainWindowController implements Initializable{
 
     @FXML
     protected void handlePauseItemButtonOnClick(ActionEvent event){
-        try {
-            this.selectedTask.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            this.selectedTask.suspend();
     }
 
 
     @FXML
     protected void handleResumeItemButtonOnClick(ActionEvent event){
-        this.selectedTask.run();
+        this.selectedTask.resume();
     }
 
     public void launchDownload(Downloader downloader) {
@@ -96,6 +96,7 @@ public class MainWindowController implements Initializable{
         });
 
         for (Downloader task : downloadTab.getItems()) {
+            future.add(executor.submit(task));
             executor.execute(task);
         }
     }
