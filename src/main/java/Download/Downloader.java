@@ -110,8 +110,8 @@ public class Downloader extends Task<Void> {
                 try {
                     while(suspended){
                         synchronized(this){
-                            this.wait();
                             System.out.println("OnPause");
+                            this.wait();
                         }
                     }
                 }
