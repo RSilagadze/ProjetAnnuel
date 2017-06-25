@@ -45,25 +45,10 @@ public class Downloader extends Task<Void> {
     public Void call() {
 
         this.updateMessage(this.fileName);
-        while(!Thread.currentThread().isInterrupted()){
-            if(!suspended){
-                try {
-                    downloadFile(host,directory);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            else{
-                try {
-                    while(suspended){
-                        synchronized(this){
-                            this.wait();
-                        }
-                    }
-                }
-                catch (InterruptedException e) {
-                }
-            }
+        try {
+            downloadFile(host,directory);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -118,9 +103,21 @@ public class Downloader extends Task<Void> {
             int bytesRead = -1;
             int totalBytes = 0;
             byte[] buffer = new byte[BUFFER_SIZE];
-            while ((bytesRead = inputStream.read(buffer)) != -1 && !suspended) {
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
                 totalBytes += bytesRead;
                 this.updateProgress(totalBytes,contentLength);
+                try {
+                    while(suspended){
+                        synchronized(this){
+                            this.wait();
+                            System.out.println("OnPause");
+                        }
+                    }
+                }
+                catch (InterruptedException e) {
+                }
+
                 System.out.println(totalBytes);
                 outputStream.write(buffer, 0, bytesRead);
             }
