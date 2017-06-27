@@ -62,6 +62,7 @@
          <center>
             <TableView fx:id="downloadTab" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <columns>
+                  <TableColumn fx:id="statusImageCol" text="Status"/>
                   <TableColumn fx:id="fileNameCol" prefWidth="481.0" text="File Name" />
                   <TableColumn fx:id="sizeCol" minWidth="0.0" prefWidth="505.0" text="Size" />
                   <TableColumn fx:id="progressCol" minWidth="0.0" prefWidth="293.0" text="Progress" />

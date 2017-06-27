@@ -7,19 +7,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+
 /**
  * Created by kokoghlanian on 27/04/2017.
  */
 public class Downloader extends Task<Void> {
 
     private volatile boolean suspended = false;
+    private static final int BUFFER_SIZE = 4096;
     private String directory;
     private String fileName;
     private String host;
-    public File file;
-    private Double size;
+    protected Double size;
     public URLConnection website;
-    private static final int BUFFER_SIZE = 4096;
 
     public Double getSize() {
         return size;
@@ -43,9 +43,8 @@ public class Downloader extends Task<Void> {
     }
 
     public Void call() {
-
-        this.updateMessage(this.fileName);
         try {
+            updateTitle(fileName);
             downloadFile(host,directory);
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,11 +63,14 @@ public class Downloader extends Task<Void> {
             String fileName = "";
             String disposition = httpConn.getHeaderField("Content-Disposition");
             String contentType = httpConn.getContentType();
-            int contentLength = httpConn.getContentLength();
-            if(contentLength==-1&&httpConn.getHeaderField("Content-Disposition")!=null){
-                this.size=Double.valueOf(httpConn.getHeaderField("Content-Length"));
-                contentLength = this.size.intValue();
+
+            Double contentLength = Double.valueOf(httpConn.getContentLength());
+
+            if(contentLength==-1 && httpConn.getHeaderField("Content-Disposition")!=null){
+                contentLength = Double.valueOf(httpConn.getHeaderField("Content-Length"));
             }
+
+            this.size = Double.valueOf(contentLength);
             for(String s : httpConn.getHeaderFields().keySet()){
                 System.out.println("Fields : "+s+"   "+httpConn.getHeaderFields().get(s));
             }
@@ -104,27 +106,27 @@ public class Downloader extends Task<Void> {
             int totalBytes = 0;
             byte[] buffer = new byte[BUFFER_SIZE];
 
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
+            while ((bytesRead = inputStream.read(buffer)) != -1){
                 totalBytes += bytesRead;
                 this.updateProgress(totalBytes,contentLength);
                 try {
                     while(suspended){
                         synchronized(this){
                             System.out.println("OnPause");
+                            this.updateMessage("Pause");
                             this.wait();
                         }
                     }
                 }
                 catch (InterruptedException e) {
                 }
-
+                this.updateMessage("Play");
                 System.out.println(totalBytes);
                 outputStream.write(buffer, 0, bytesRead);
             }
 
             outputStream.close();
             inputStream.close();
-
             System.out.println("File downloaded");
         } else {
             System.out.println("No file to download. Server replied HTTP code: " + responseCode);

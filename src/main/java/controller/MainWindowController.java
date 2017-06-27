@@ -12,9 +12,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import tools.ClipBoard;
 
 
 import java.io.IOException;
@@ -40,6 +43,9 @@ public class MainWindowController implements Initializable{
 
     @FXML
     TableColumn<Downloader,Double> progressCol;
+
+    @FXML
+    TableColumn<Downloader,String> statusImageCol;
 
     @FXML
     MenuItem addLinkMenuItem;
@@ -71,12 +77,10 @@ public class MainWindowController implements Initializable{
         }
     }
 
-
     @FXML
     protected void handlePauseItemButtonOnClick(ActionEvent event){
             this.selectedTask.suspend();
     }
-
 
     @FXML
     protected void handleResumeItemButtonOnClick(ActionEvent event){
@@ -85,6 +89,7 @@ public class MainWindowController implements Initializable{
 
     public void launchDownload(Downloader downloader) {
 
+        System.out.println("Launch-Download");
         downloadTab.getItems().add(downloader);
 
         ExecutorService executor = Executors.newFixedThreadPool(downloadTab.getItems().size(), new ThreadFactory() {
@@ -96,14 +101,20 @@ public class MainWindowController implements Initializable{
         });
 
         for (Downloader task : downloadTab.getItems()) {
+            System.out.println("Execute Task");
             future.add(executor.submit(task));
             executor.execute(task);
         }
     }
 
-    public void initialize(URL location, ResourceBundle resources) {
-
+    public void initialize(URL location, ResourceBundle resources){
         ControllerMediator.getInstance().registerMainWindowController(this);
+
+        try {
+            ClipBoard.launchClipBoardListner();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         pauseButton.disableProperty().bind(Bindings.isEmpty(downloadTab.getSelectionModel().getSelectedItems()));
 
         //downloadTab.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -115,18 +126,21 @@ public class MainWindowController implements Initializable{
             }
         });
 
+        statusImageCol.setCellValueFactory(new PropertyValueFactory<Downloader, String>(
+                "message"));
+
+        fileNameCol.setCellValueFactory(new PropertyValueFactory<Downloader, String>(
+                "title"));
 
         //bind sur les getter de la classe downloader.
         sizeCol.setCellValueFactory(new PropertyValueFactory<Downloader, Double>(
                 "size"));
 
-        fileNameCol.setCellValueFactory(new PropertyValueFactory<Downloader, String>(
-                "message"));
-
         progressCol.setCellValueFactory(new PropertyValueFactory<Downloader, Double>(
                 "progress"));
         progressCol
                 .setCellFactory(ProgressBarTableCell.<Downloader> forTableColumn());
-        downloadTab.getColumns().setAll(fileNameCol,sizeCol,progressCol);
+
+        downloadTab.getColumns().setAll(statusImageCol,fileNameCol,sizeCol,progressCol);
     }
 }
