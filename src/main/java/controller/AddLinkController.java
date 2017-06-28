@@ -2,6 +2,7 @@ package controller;
 
 import Download.Downloader;
 
+import entities.Link;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,10 +11,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import metier.LinkMetier;
+import metier.UserMetier;
 import tools.Const;
+import usercontrol.Context;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import static tools.Const.*;
@@ -48,6 +52,7 @@ public class AddLinkController implements Initializable{
                 urlTextField.getText(),
                 (finished_download) -> {LinkMetier.deleteLink(finished_download.getHost());}
         );
+        LinkMetier.insertLink(urlTextField.getText(), Context.getCurrentUser().getId(), new Date(), fileNameTextField.getText());
         ControllerMediator.getInstance().executeDownload(downloader);
         stage.close();
     }

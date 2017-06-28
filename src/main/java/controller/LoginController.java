@@ -48,7 +48,7 @@ public class LoginController implements Initializable {
                 e.printStackTrace();
             }
             finally {
-                Stage stage =  (Stage) this.loginTextField.getScene().getWindow();
+                Stage stage = (Stage) this.loginTextField.getScene().getWindow();
                 stage.close();
             }
         }

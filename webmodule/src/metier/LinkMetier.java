@@ -4,6 +4,7 @@ import dao.LinkDAO;
 import entities.Link;
 import utils.Queries;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +25,10 @@ public class LinkMetier {
 
     public static int deleteLink(String url){
         return instance.linkDAO.delete(Queries.deleteLinkByURL, url);
+    }
+
+    public static int insertLink(String url, int IdUser, Date dateCreated, String linkName){
+        return instance.linkDAO.insert(Queries.insertLink, url, IdUser, dateCreated, linkName);
     }
 
 }

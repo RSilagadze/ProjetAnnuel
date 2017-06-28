@@ -3,10 +3,7 @@ package dao;
 import dbconnector.SqlConnector;
 import entities.DefaultEntity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,6 +60,21 @@ public class AbstractDAO<T extends DefaultEntity> implements IDAO<T>{
             System.err.println(e.getMessage());
         }
         return rows;
+    }
+
+    @Override
+    public int insert(String query, Object... args) {
+        int id = -1;
+        try (Connection cn = SqlConnector.getNewConnection()){
+            PreparedStatement st = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            putParameters(st, args);
+            st.executeUpdate();
+            ResultSet rs = st.getGeneratedKeys();
+            id = rs.next() ? rs.getInt(1) : 0;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return id;
     }
 
     private void putParameters(PreparedStatement st, Object...args) throws SQLException {

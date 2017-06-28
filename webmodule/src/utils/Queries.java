@@ -15,5 +15,6 @@ public class Queries {
     public static final String getUserTypeByUserID = "SELECT t.* FROM " + jdownloader + "." + userTypeTable + " t " +
            "INNER JOIN " + jdownloader + "." + userTable + " u ON u.IdType = t.Id WHERE u.Id=?";
     public static final String deleteLinkByURL = "DELETE FROM " + jdownloader + "." + linkTable + " WHERE URL=?";
-
+    public static final String insertLink = "INSERT INTO " + jdownloader + "." + linkTable + " (Url, IdUser, DateCreated, Name) " +
+            "VALUES (?,?,?,?)";
 }
