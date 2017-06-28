@@ -1,6 +1,7 @@
 package controller;
 
 import Download.Downloader;
+import entities.Link;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,12 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import metier.LinkMetier;
 import tools.ClipBoard;
+import adapter.DownloaderAdapter;
+import usercontrol.Context;
 
 
 import java.io.IOException;
@@ -89,16 +91,35 @@ public class MainWindowController implements Initializable{
 
     public void launchDownload(Downloader downloader) {
 
-        System.out.println("Launch-Download");
         downloadTab.getItems().add(downloader);
 
-        ExecutorService executor = Executors.newFixedThreadPool(downloadTab.getItems().size(), new ThreadFactory() {
+        ExecutorService executor = getExecutorThreadPool();
+
+        for (Downloader task : downloadTab.getItems()) {
+            System.out.println("Execute Task");
+            future.add(executor.submit(task));
+            executor.execute(task);
+        }
+    }
+
+    public ExecutorService getExecutorThreadPool(){
+        if(downloadTab.getItems() == null)
+            return null;
+        return Executors.newFixedThreadPool(10, new ThreadFactory() {
             public Thread newThread(Runnable r) {
                 Thread t = new Thread(r);
                 t.setDaemon(true);
                 return t;
             }
         });
+    }
+
+    public void launchDownloadList(List<Link> linkListToDownload){
+        ExecutorService executor = getExecutorThreadPool();
+
+        for(int i= 0; i< linkListToDownload.size(); i++){
+            downloadTab.getItems().add(DownloaderAdapter.linkToDownloader(linkListToDownload.get(i)));
+        }
 
         for (Downloader task : downloadTab.getItems()) {
             System.out.println("Execute Task");
@@ -142,5 +163,9 @@ public class MainWindowController implements Initializable{
                 .setCellFactory(ProgressBarTableCell.<Downloader> forTableColumn());
 
         downloadTab.getColumns().setAll(statusImageCol,fileNameCol,sizeCol,progressCol);
+
+        List<Link> links = LinkMetier.getLinkListByUserId(Context.getCurrentUser().getId());
+        launchDownloadList(links);
+
     }
 }
