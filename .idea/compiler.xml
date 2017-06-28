@@ -10,7 +10,7 @@
         <module name="ProjetAnnuel4AL" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8">
       <module name="ProjetAnnuel4AL" target="1.8" />
     </bytecodeTargetLevel>
   </component>
