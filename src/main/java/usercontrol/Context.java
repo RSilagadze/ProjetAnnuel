@@ -26,6 +26,7 @@ public class Context {
     }
 
     private Context (){
+        SqlConnector.init();
         currentUser = new User();
         currentUser.setUserType(new UserType());
     }
