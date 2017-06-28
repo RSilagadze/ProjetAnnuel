@@ -56,11 +56,11 @@ public class Link extends DefaultEntity {
 
     @Override
     protected Object getKeyComparer() {
-        return null;
+        return this.id;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.id <= 0;
     }
 }
