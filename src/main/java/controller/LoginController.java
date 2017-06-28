@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metier.UserMetier;
+import usercontrol.Context;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +36,7 @@ public class LoginController implements Initializable {
        User user = UserMetier.getUser(loginTextField.getText(),passTextField.getText());
         if(!user.isEmpty()){
             try {
+                Context.setCurrentUser(user);
                 AnchorPane root  = FXMLLoader.load(getClass().getResource("/mainWindow.fxml"));
                 Stage linkStage = new Stage();
                 linkStage.setTitle("Downloader");
