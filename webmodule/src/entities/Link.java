@@ -18,7 +18,7 @@ public class Link extends DefaultEntity {
         this.idUser = idUser;
     }
 
-    private String nameStr;
+    private String name;
     private Date dateCreated;
     private int idUser;
 
@@ -38,12 +38,12 @@ public class Link extends DefaultEntity {
         this.url = url;
     }
 
-    public String getNameStr() {
-        return nameStr;
+    public String getName() {
+        return name;
     }
 
-    public void setNameStr(String nameStr) {
-        this.nameStr = nameStr;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getDateCreated() {

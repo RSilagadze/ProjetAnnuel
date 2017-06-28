@@ -17,6 +17,7 @@ public class LinkDAO extends AbstractDAO<Link> {
             l.setIdUser(rs.getInt("IdUser"));
             l.setUrl(rs.getString("Url"));
             l.setDateCreated(rs.getDate("DateCreated"));
+            l.setName(rs.getString("Name"));
         }catch(SQLException e){
             System.err.println(e.getMessage());
         }
