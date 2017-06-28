@@ -52,6 +52,19 @@ public class AbstractDAO<T extends DefaultEntity> implements IDAO<T>{
         return lst;
     }
 
+    @Override
+    public int delete(String query, Object... args) {
+        int rows = -1;
+        try (Connection cn = SqlConnector.getNewConnection()){
+            PreparedStatement st = cn.prepareStatement(query);
+            putParameters(st, args);
+            rows = st.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rows;
+    }
+
     private void putParameters(PreparedStatement st, Object...args) throws SQLException {
         for(int i = 0; i < args.length; i++){
            Object value = args[i];

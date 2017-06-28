@@ -22,4 +22,8 @@ public class LinkMetier {
         return instance.linkDAO.getList(Queries.getLinksByUser, id);
     }
 
+    public static int deleteLink(String url){
+        return instance.linkDAO.delete(Queries.deleteLinkByURL, url);
+    }
+
 }

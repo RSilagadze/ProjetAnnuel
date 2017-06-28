@@ -2,6 +2,8 @@ package adapter;
 
 import Download.Downloader;
 import entities.Link;
+import interfaces.IPostback;
+import metier.LinkMetier;
 import tools.Const;
 
 /**
@@ -9,7 +11,17 @@ import tools.Const;
  */
 public class DownloaderAdapter {
 
-    public static Downloader linkToDownloader(Link link){
-        return new Downloader(Const.DEFAULT_PATH,link.getName(),link.getUrl());
+    private static DownloaderAdapter instance = new DownloaderAdapter();
+    private final IPostback<Downloader> ipostback;
+
+    private DownloaderAdapter(){
+        this.ipostback = (downloader) -> {
+            LinkMetier.deleteLink(downloader.getHost());
+        };
     }
+
+    public static Downloader linkToDownloader(Link link){
+        return new Downloader(Const.DEFAULT_PATH, link.getName(), link.getUrl(), instance.ipostback);
+    }
+
 }

@@ -1,5 +1,7 @@
 package Download;
 
+import entities.Link;
+import interfaces.IPostback;
 import javafx.concurrent.Task;
 
 import java.io.*;
@@ -15,20 +17,24 @@ public class Downloader extends Task<Void> {
 
     private volatile boolean suspended = false;
     private static final int BUFFER_SIZE = 4096;
+
     private String directory;
     private String fileName;
     private String host;
     protected Double size;
     public URLConnection website;
 
+    private final IPostback<Downloader> ipostback;
+
     public Double getSize() {
         return size;
     }
 
-    public Downloader(String directory, String fileName, String host) {
+    public Downloader(String directory, String filename, String host, IPostback<Downloader> onpostback) {
         this.directory = directory;
-        this.fileName = fileName;
+        this.fileName = filename;
         this.host = host;
+        this.ipostback = onpostback;
     }
 
     public void suspend(){
@@ -128,10 +134,15 @@ public class Downloader extends Task<Void> {
             outputStream.close();
             inputStream.close();
             System.out.println("File downloaded");
+            ipostback.onPostedBack(this);
         } else {
             System.out.println("No file to download. Server replied HTTP code: " + responseCode);
         }
         httpConn.disconnect();
+    }
+
+    public String getHost() {
+        return host;
     }
 
 }

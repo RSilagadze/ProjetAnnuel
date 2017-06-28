@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import metier.LinkMetier;
 import tools.Const;
 
 import java.io.File;
@@ -41,7 +42,12 @@ public class AddLinkController implements Initializable{
         Stage stage = (Stage) okLinkButton.getScene().getWindow();
         if(absoluthPathSaveDirectory==null)
             this.absoluthPathSaveDirectory= DEFAULT_PATH;
-        Downloader downloader = new Downloader(absoluthPathSaveDirectory,fileNameTextField.getText(),urlTextField.getText());
+        Downloader downloader = new Downloader(
+                absoluthPathSaveDirectory,
+                fileNameTextField.getText(),
+                urlTextField.getText(),
+                (finished_download) -> {LinkMetier.deleteLink(finished_download.getHost());}
+        );
         ControllerMediator.getInstance().executeDownload(downloader);
         stage.close();
     }

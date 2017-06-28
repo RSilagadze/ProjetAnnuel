@@ -14,5 +14,6 @@ public class Queries {
     public static final String getLinksByUser = "SELECT l.* FROM " + jdownloader + "." + linkTable + " l WHERE l.IdUser=? Order By l.DateCreated DESC";
     public static final String getUserTypeByUserID = "SELECT t.* FROM " + jdownloader + "." + userTypeTable + " t " +
            "INNER JOIN " + jdownloader + "." + userTable + " u ON u.IdType = t.Id WHERE u.Id=?";
+    public static final String deleteLinkByURL = "DELETE FROM " + jdownloader + "." + linkTable + " WHERE URL=?";
 
 }
