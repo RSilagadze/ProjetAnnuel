@@ -29,7 +29,6 @@ public class UserMetier {
             u = new User();
             u.setUserType(new UserType());
         }
-        System.out.println(u.getLastName());
         return u;
     }
 
