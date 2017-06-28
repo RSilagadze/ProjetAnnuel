@@ -63,7 +63,7 @@ public class Downloader extends Task<Void> {
             throws IOException {
         URL url = new URL(fileURL);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-        httpConn.setRequestProperty("Range", "bytes=" + new File(saveDir).length() + "-");
+        //httpConn.setRequestProperty("Range", "bytes=" + new File(saveDir).length() + "-");
         int responseCode = httpConn.getResponseCode();
 
         // always check HTTP response code first
@@ -135,6 +135,7 @@ public class Downloader extends Task<Void> {
 
             outputStream.close();
             inputStream.close();
+            this.updateMessage("Done");
             System.out.println("File downloaded");
             ipostback.onPostedBack(this);
         } else {
