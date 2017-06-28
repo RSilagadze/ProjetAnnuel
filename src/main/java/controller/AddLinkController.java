@@ -58,10 +58,6 @@ public class AddLinkController implements Initializable{
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Choose download directory");
         File file = directoryChooser.showDialog(new Stage());
-
-
-
-
         absoluthPathSaveDirectory  = file.getAbsolutePath();
     }
 
