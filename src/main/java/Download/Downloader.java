@@ -22,6 +22,7 @@ public class Downloader extends Task<Void> {
     private String fileName;
     private String host;
     protected Double size;
+    boolean finish=false;
     public URLConnection website;
 
     private final IPostback<Downloader> ipostback;
@@ -62,6 +63,7 @@ public class Downloader extends Task<Void> {
             throws IOException {
         URL url = new URL(fileURL);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+        httpConn.setRequestProperty("Range", "bytes=" + new File(saveDir).length() + "-");
         int responseCode = httpConn.getResponseCode();
 
         // always check HTTP response code first
@@ -139,6 +141,7 @@ public class Downloader extends Task<Void> {
             System.out.println("No file to download. Server replied HTTP code: " + responseCode);
         }
         httpConn.disconnect();
+        finish=true;
     }
 
     public String getHost() {
