@@ -51,6 +51,7 @@ public class Downloader extends Task<Void> {
 
     public Void call() {
         try {
+            updateMessage("Init");
             updateTitle(fileName);
             downloadFile(host,directory);
         } catch (IOException e) {

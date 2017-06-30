@@ -51,7 +51,7 @@
                                  </toggleGroup>
                               </ToggleButton>
                               <ToggleButton fx:id="pauseButton" mnemonicParsing="false" text="Pause" onAction="#handlePauseItemButtonOnClick" toggleGroup="$DownloadControleGroupe" />
-                              <ToggleButton mnemonicParsing="false" text="Stop" toggleGroup="$DownloadControleGroupe" />
+                              <ToggleButton fx:id="deleteButton" onAction="#handleDeleteItemButtonOnClick" mnemonicParsing="false" text="Delete" toggleGroup="$DownloadControleGroupe" />
                            </items>
                         </ToolBar>
                      </children>

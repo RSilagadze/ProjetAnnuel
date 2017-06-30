@@ -58,6 +58,9 @@ public class MainWindowController implements Initializable{
     @FXML
     ToggleButton playToggleButton;
 
+    @FXML
+    ToggleButton deleteButton;
+
     private Downloader selectedTask;
     private List<Future<?>> future = new ArrayList<Future<?>>();
 
@@ -77,6 +80,11 @@ public class MainWindowController implements Initializable{
             System.out.println("Impossible d'afficher la linkPage");
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    protected void handleDeleteItemButtonOnClick(ActionEvent event){
+        downloadTab.getItems().remove(selectedTask);
     }
 
     @FXML
