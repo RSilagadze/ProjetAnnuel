@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
@@ -12,14 +13,26 @@ public class ConfigLoader {
     private static final ConfigLoader instance = new ConfigLoader();
 
     private ConfigLoader(){
-        readProperties("webmodule/config.properties");
+        try {
+            
+            readProperties("./config.properties");
+        }
+        catch (Exception e){
+            try {
+                readProperties("./webmodule/config.properties");
+            }
+            catch(Exception e1){
+                e1.printStackTrace();
+            }
+        }
     }
 
-    private void readProperties(String file){
+    private void readProperties(String file) throws Exception{
         try (FileInputStream fis = new FileInputStream(file)){
             properties.load(fis);
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            throw e;
         }
     }
 

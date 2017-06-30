@@ -1,3 +1,5 @@
+package mainpackage;
+
 import dbconnector.SqlConnector;
 import entities.User;
 import javafx.application.Application;
@@ -11,7 +13,7 @@ import utils.ConfigLoader;
 import utils.Queries;
 
 
-public class Main extends Application {
+public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {

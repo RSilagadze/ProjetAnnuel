@@ -5,24 +5,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddLinkController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddLinkController">
     <children>
         <BorderPane layoutX="186.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <right>
-                <TextField fx:id="fileNameTextField" alignment="CENTER_RIGHT" BorderPane.alignment="CENTER" />
+                <TextField fx:id="fileNameTextField" alignment="CENTER_RIGHT" focusTraversable="false" promptText="file name" BorderPane.alignment="CENTER" />
             </right>
             <center>
-                <TextField fx:id="urlTextField" BorderPane.alignment="CENTER" />
+                <TextField fx:id="urlTextField" focusTraversable="false" promptText="Link" BorderPane.alignment="CENTER" />
             </center>
             <bottom>
                 <HBox prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Button fx:id="fileChooserButton" mnemonicParsing="false" onAction="#handleFileChooserButtonOnClick" prefHeight="31.0" prefWidth="561.0" text="parcourir" />
-                        <Button fx:id="okLinkButton" mnemonicParsing="false" onAction="#handleOkLinkButtonOnClick" text="ok" />
+                        <Button fx:id="fileChooserButton" mnemonicParsing="false" onAction="#handleFileChooserButtonOnClick" prefHeight="31.0" prefWidth="459.0" text="parcourir" />
+                  <HBox />
+                        <Button fx:id="okLinkButton" mnemonicParsing="false" onAction="#handleOkLinkButtonOnClick" prefHeight="36.0" prefWidth="104.0" text="ok" />
                     </children>
                 </HBox>
             </bottom>
+         <top>
+            <TextFlow prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+         </top>
         </BorderPane>
     </children>
 </AnchorPane>

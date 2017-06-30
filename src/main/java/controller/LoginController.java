@@ -1,5 +1,6 @@
 package controller;
 
+
 import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,11 +15,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metier.UserMetier;
 import usercontrol.Context;
-
+import mainpackage.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import tools.Const;
 /**
  * Created by kokoghlanian on 28/06/2017.
  */
@@ -37,7 +38,7 @@ public class LoginController implements Initializable {
         if(!user.isEmpty()){
             try {
                 Context.setCurrentUser(user);
-                AnchorPane root  = FXMLLoader.load(getClass().getResource("/mainWindow.fxml"));
+                AnchorPane root  = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
                 Stage linkStage = new Stage();
                 linkStage.setTitle("Downloader");
                 linkStage.initStyle(StageStyle.DECORATED);
