@@ -45,7 +45,7 @@ public class MainWindowController implements Initializable{
     TableColumn<Downloader,String> fileNameCol;
 
     @FXML
-    TableColumn<Downloader,Double> sizeCol;
+    TableColumn<Downloader,Long> sizeCol;
 
     @FXML
     TableColumn<Downloader,Double> progressCol;
@@ -192,8 +192,8 @@ public class MainWindowController implements Initializable{
                 "title"));
 
         //bind sur les getter de la classe downloader.
-        sizeCol.setCellValueFactory(new PropertyValueFactory<Downloader, Double>(
-                "size"));
+        sizeCol.setCellValueFactory(new PropertyValueFactory<Downloader, Long>(
+                "value"));
 
         progressCol.setCellValueFactory(new PropertyValueFactory<Downloader, Double>(
                 "progress"));

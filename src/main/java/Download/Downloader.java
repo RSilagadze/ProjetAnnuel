@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by kokoghlanian on 27/04/2017.
  */
-public class Downloader extends Task<Integer> {
+public class Downloader extends Task<Long> {
 
     private volatile boolean suspended = false;
     private static final int BUFFER_SIZE = 4096;
@@ -26,13 +26,13 @@ public class Downloader extends Task<Integer> {
     private String directory;
     private String fileName;
     private String host;
-    protected Double size;
+    protected Long size;
     public boolean finish=false;
     public URLConnection website;
 
     private final IPostback<Downloader> ipostback;
 
-    public Double getSize() {
+    public Long getSize() {
         return size;
     }
 
@@ -55,7 +55,7 @@ public class Downloader extends Task<Integer> {
     }
 
 
-    public Integer call() throws InterruptedException, ExecutionException {
+    public Long call() throws InterruptedException, ExecutionException {
         try {
             updateMessage("Init");
             updateTitle(fileName);
@@ -64,7 +64,7 @@ public class Downloader extends Task<Integer> {
             System.out.println("in");
             throw new ExecutionException(e);
         }
-        return 1;
+        return size;
     }
 
     private void downloadFile(String fileURL, String saveDir)
@@ -80,13 +80,14 @@ public class Downloader extends Task<Integer> {
             String disposition = httpConn.getHeaderField("Content-Disposition");
             String contentType = httpConn.getContentType();
 
-            Double contentLength = Double.valueOf(httpConn.getContentLength());
+            Long contentLength = Long.valueOf(httpConn.getContentLength());
 
-            if(contentLength==-1 && httpConn.getHeaderField("Content-Disposition")!=null){
-                contentLength = Double.valueOf(httpConn.getHeaderField("Content-Length"));
+            if(contentLength==-1 && httpConn.getHeaderField("Content-Length")!=null){
+                contentLength = Long.valueOf(httpConn.getHeaderField("Content-Length"));
             }
 
-            this.size = Double.valueOf(contentLength);
+            this.size = Long.valueOf(contentLength);
+            this.updateValue(size);
             for(String s : httpConn.getHeaderFields().keySet()){
                 System.out.println("Fields : "+s+"   "+httpConn.getHeaderFields().get(s));
             }
