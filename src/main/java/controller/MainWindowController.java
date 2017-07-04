@@ -115,16 +115,20 @@ public class MainWindowController implements Initializable{
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                while(!downloader.isDone());
-                if(!downloader.finish) {
-                    LinkMetier.deleteLink(downloader.getHost());
-                    downloadTab.getItems().remove(downloader);
-                    Stage dialog = new Stage();
-                    dialog.initStyle(StageStyle.DECORATED);
-                    Scene scene = new Scene(new Group(new Text(20, 20, "URL : "+downloader.getHost()+"\n is invalid")),150,50);
+                try {
+                    Thread.currentThread().wait(1000);
+                    if(downloader.isDone()&&!downloader.finish) {
+                        LinkMetier.deleteLink(downloader.getHost());
+                        downloadTab.getItems().remove(downloader);
+                        Stage dialog = new Stage();
+                        dialog.initStyle(StageStyle.DECORATED);
+                        Scene scene = new Scene(new Group(new Text(20, 20, "URL : " + downloader.getHost() + "\n is invalid")), 150, 50);
 
-                    dialog.setScene(scene);
-                    dialog.show();
+                        dialog.setScene(scene);
+                        dialog.show();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
