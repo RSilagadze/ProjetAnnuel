@@ -148,7 +148,7 @@ public class MainWindowController implements Initializable{
         int size=linkListToDownload.size();
             for(int i=0;i<size;i++){
               for(int j=i+1;j<size;j++){
-                  if(linkListToDownload.get(i).getUrl().equals(linkListToDownload.get(i).getUrl())){
+                  if(linkListToDownload.get(i).getUrl().equals(linkListToDownload.get(i).getUrl())||linkListToDownload.get(i).getName().equals(linkListToDownload.get(i).getName())){
                       linkListToDownload.remove(j);
                       size--;
                   }
