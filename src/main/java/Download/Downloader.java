@@ -55,14 +55,14 @@ public class Downloader extends Task<Integer> {
     }
 
 
-    public Integer call() throws InterruptedException {
+    public Integer call() throws InterruptedException, ExecutionException {
         try {
             updateMessage("Init");
             updateTitle(fileName);
             downloadFile(host,directory);
         } catch (IOException e) {
             System.out.println("in");
-            throw new InterruptedException();
+            throw new ExecutionException(e);
         }
         return 1;
     }

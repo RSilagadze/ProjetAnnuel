@@ -55,7 +55,7 @@ public class LoginController implements Initializable {
         }
         else{
             Stage dialog = new Stage();
-            dialog.initStyle(StageStyle.UTILITY);
+            dialog.initStyle(StageStyle.DECORATED);
             Scene scene = new Scene(new Group(new Text(20, 20, "Login Error!")),150,50);
 
             dialog.setScene(scene);
