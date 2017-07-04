@@ -3,6 +3,7 @@ package controller;
 import Download.Downloader;
 import com.sun.javaws.LaunchDownload;
 import entities.Link;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -111,15 +112,22 @@ public class MainWindowController implements Initializable{
             future.add(executor.submit(task));
             executor.execute(task);
         }
-        Thread t = new Thread(new Runnable() {
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 while(!downloader.isDone());
-                if(!downloader.finish)
+                if(!downloader.finish) {
                     downloadTab.getItems().remove(downloader);
+                    Stage dialog = new Stage();
+                    dialog.initStyle(StageStyle.DECORATED);
+                    Scene scene = new Scene(new Group(new Text(20, 20, "URL : "+downloader.getHost()+"\n is invalid")),150,50);
+
+                    dialog.setScene(scene);
+                    dialog.show();
+                }
             }
         });
-        t.start();
+
     }
 
     public ExecutorService getExecutorThreadPool(){
@@ -135,7 +143,7 @@ public class MainWindowController implements Initializable{
     }
 
     public void launchDownloadList(List<Link> linkListToDownload){
-         
+
              int size=linkListToDownload.size();
             for(int i=0;i<size;i++){
               for(int j=i+1;j<size;j++){
