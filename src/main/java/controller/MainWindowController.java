@@ -3,6 +3,7 @@ package controller;
 import Download.Downloader;
 import com.sun.javaws.LaunchDownload;
 import entities.Link;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -120,7 +121,7 @@ public class MainWindowController implements Initializable{
                     downloadTab.getItems().remove(downloader);
                     Stage dialog = new Stage();
                     dialog.initStyle(StageStyle.DECORATED);
-                    Scene scene = new Scene(new Group(new Text(20, 20, "URL : "+downloader.getHost()+"\n is invalid")),150,50);
+                    Scene scene = new Scene(new Group(new Text(20, 20, "URL : "+downloader.getHost()+"\n is invalid")),250,50);
 
                     dialog.setScene(scene);
                     dialog.show();
@@ -144,7 +145,7 @@ public class MainWindowController implements Initializable{
 
     public void launchDownloadList(List<Link> linkListToDownload){
          
-             int size=linkListToDownload.size();
+        int size=linkListToDownload.size();
             for(int i=0;i<size;i++){
               for(int j=i+1;j<size;j++){
                   if(linkListToDownload.get(i).getUrl().equals(linkListToDownload.get(i).getUrl())){
