@@ -20,14 +20,14 @@
                 <HBox prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                     <children>
                         <Button fx:id="fileChooserButton" mnemonicParsing="false" onAction="#handleFileChooserButtonOnClick" prefHeight="31.0" prefWidth="459.0" text="parcourir" />
-                  <HBox />
+                        <HBox />
                         <Button fx:id="okLinkButton" mnemonicParsing="false" onAction="#handleOkLinkButtonOnClick" prefHeight="36.0" prefWidth="104.0" text="ok" />
                     </children>
                 </HBox>
             </bottom>
-         <top>
-            <TextFlow prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
-         </top>
+            <top>
+                <TextFlow prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+            </top>
         </BorderPane>
     </children>
 </AnchorPane>

@@ -3,7 +3,6 @@ package controller;
 import Download.Downloader;
 import com.sun.javaws.LaunchDownload;
 import entities.Link;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -117,6 +116,7 @@ public class MainWindowController implements Initializable{
             public void run() {
                 while(!downloader.isDone());
                 if(!downloader.finish) {
+                    LinkMetier.deleteLink(downloader.getHost());
                     downloadTab.getItems().remove(downloader);
                     Stage dialog = new Stage();
                     dialog.initStyle(StageStyle.DECORATED);
@@ -143,7 +143,7 @@ public class MainWindowController implements Initializable{
     }
 
     public void launchDownloadList(List<Link> linkListToDownload){
-
+         
              int size=linkListToDownload.size();
             for(int i=0;i<size;i++){
               for(int j=i+1;j<size;j++){
