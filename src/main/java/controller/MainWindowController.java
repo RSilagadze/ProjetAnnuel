@@ -1,6 +1,7 @@
 package controller;
 
 import Download.Downloader;
+import com.sun.javaws.LaunchDownload;
 import entities.Link;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -134,18 +135,22 @@ public class MainWindowController implements Initializable{
     }
 
     public void launchDownloadList(List<Link> linkListToDownload){
-        ExecutorService executor = getExecutorThreadPool();
+         
+             int size=linkListToDownload.size();
+            for(int i=0;i<size;i++){
+              for(int j=i+1;j<size;j++){
+                  if(linkListToDownload.get(i).getUrl().equals(linkListToDownload.get(i).getUrl())){
+                      linkListToDownload.remove(j);
+                      size--;
+                  }
+              }
+            }
 
         for(int i= 0; i< linkListToDownload.size(); i++){
-            downloadTab.getItems().add(DownloaderAdapter.linkToDownloader(linkListToDownload.get(i)));
+           launchDownload(DownloaderAdapter.linkToDownloader(linkListToDownload.get(i)));
         }
 
-        for (Downloader task : downloadTab.getItems()) {
-            System.out.println("Execute Task");
-            future.add(executor.submit(task));
-            executor.execute(task);
-        }
-     //   for()
+
     }
 
     public void initialize(URL location, ResourceBundle resources){
