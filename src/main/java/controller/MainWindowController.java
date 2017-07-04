@@ -9,13 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metier.LinkMetier;
@@ -114,8 +112,10 @@ public class MainWindowController implements Initializable{
             @Override
             public void run() {
                 while(!downloader.isDone());
-                if(!downloader.finish)
+                if(!downloader.finish) {
+                    LinkMetier.deleteLink(downloader.getHost());
                     downloadTab.getItems().remove(downloader);
+                }
             }
         });
         t.start();
