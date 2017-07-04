@@ -114,7 +114,8 @@ public class MainWindowController implements Initializable{
             @Override
             public void run() {
                 while(!downloader.isDone());
-                downloadTab.getItems().remove(downloader);
+                if(!downloader.finish)
+                    downloadTab.getItems().remove(downloader);
             }
         });
         t.start();

@@ -27,7 +27,7 @@ public class Downloader extends Task<Integer> {
     private String fileName;
     private String host;
     protected Double size;
-    boolean finish=false;
+    public boolean finish=false;
     public URLConnection website;
 
     private final IPostback<Downloader> ipostback;
