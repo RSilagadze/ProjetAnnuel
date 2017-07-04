@@ -1,5 +1,6 @@
 package controller;
 
+import Download.DownloadException;
 import Download.Downloader;
 import entities.Link;
 import javafx.beans.binding.Bindings;
@@ -9,11 +10,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metier.LinkMetier;
@@ -27,10 +30,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.*;
 
 public class MainWindowController implements Initializable{
 
@@ -105,8 +105,22 @@ public class MainWindowController implements Initializable{
 
         for (Downloader task : downloadTab.getItems()) {
             System.out.println("Execute Task");
-            future.add(executor.submit(task));
-            executor.execute(task);
+            Future<?> f= executor.submit(task);
+            future.add(f);
+            try{
+                f.get();
+                System.out.println("in");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (DownloadException e){
+                Stage dialog = new Stage();
+                dialog.initStyle(StageStyle.UTILITY);
+                Scene scene = new Scene(new Group(new Text(20, 20, "Probleme de téléchargement")),150,50);
+                dialog.setScene(scene);
+                dialog.show();
+            }
         }
     }
 
@@ -131,8 +145,26 @@ public class MainWindowController implements Initializable{
 
         for (Downloader task : downloadTab.getItems()) {
             System.out.println("Execute Task");
-            future.add(executor.submit(task));
-            executor.execute(task);
+            Future<?> f= executor.submit(task);
+            future.add(f);
+         //   executor.execute(task);
+            try {
+                System.out.println("a");
+                f.get();
+                System.out.println("out");
+
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (DownloadException e){
+                Stage dialog = new Stage();
+                dialog.initStyle(StageStyle.UTILITY);
+                Scene scene = new Scene(new Group(new Text(20, 20, "Probleme de téléchargement")),150,50);
+                dialog.setScene(scene);
+                dialog.show();
+            }
         }
     }
 

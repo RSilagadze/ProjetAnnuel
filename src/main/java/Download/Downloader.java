@@ -1,19 +1,24 @@
 package Download;
 
-import entities.Link;
 import interfaces.IPostback;
 import javafx.concurrent.Task;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.concurrent.ExecutionException;
 
 
 /**
  * Created by kokoghlanian on 27/04/2017.
  */
-public class Downloader extends Task<Void> {
+public class Downloader extends Task<Integer> {
 
     private volatile boolean suspended = false;
     private static final int BUFFER_SIZE = 4096;
@@ -49,15 +54,17 @@ public class Downloader extends Task<Void> {
         }
     }
 
-    public Void call() {
+
+    public Integer call() throws InterruptedException {
         try {
             updateMessage("Init");
             updateTitle(fileName);
             downloadFile(host,directory);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("in");
+            throw new InterruptedException();
         }
-        return null;
+        return 1;
     }
 
     private void downloadFile(String fileURL, String saveDir)
