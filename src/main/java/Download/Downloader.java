@@ -61,7 +61,9 @@ public class Downloader extends Task<Long> {
             updateTitle(fileName);
             downloadFile(host,directory);
         } catch (IOException e) {
-            System.out.println("in");
+            synchronized (this) {
+                this.notifyAll();
+            }
             throw new ExecutionException(e);
         }
         return size;

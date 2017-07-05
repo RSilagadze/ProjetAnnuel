@@ -1,5 +1,12 @@
 package tools;
 
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.FlavorEvent;
@@ -12,24 +19,40 @@ import java.io.IOException;
  */
 public class ClipBoard {
 
+    public static String content="";
     public static void launchClipBoardListner() throws InterruptedException{
 
 
         Toolkit.getDefaultToolkit().getSystemClipboard().addFlavorListener(new FlavorListener() {
             public void flavorsChanged(FlavorEvent e) {
 
-                try {
-                    System.out.println("ClipBoard UPDATED: " + e.getSource() + " " + e.toString()+Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null).getTransferData(DataFlavor.stringFlavor));
-                } catch (HeadlessException e1) {
-                    // TODO Bloc catch auto-g?n?r?
-                    e1.printStackTrace();
-                } catch (UnsupportedFlavorException e1) {
-                    // TODO Bloc catch auto-g?n?r?
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    // TODO Bloc catch auto-g?n?r?
-                    e1.printStackTrace();
-                }
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() { try {
+                            content = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null).getTransferData(DataFlavor.stringFlavor).toString();
+
+                            AnchorPane root  = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/addLinkWindow.fxml"));
+                            Stage linkStage = new Stage();
+                            linkStage.setTitle("Add Link");
+                            linkStage.initStyle(StageStyle.DECORATED);
+                            linkStage.setScene(new Scene(root, 500, 100));
+                            linkStage.show();
+                        }
+                catch (HeadlessException e1) {
+                            // TODO Bloc catch auto-g?n?r?
+                            e1.printStackTrace();
+                        } catch (UnsupportedFlavorException e1) {
+                            // TODO Bloc catch auto-g?n?r?
+                            e1.printStackTrace();
+                        } catch (IOException e1) {
+                            // TODO Bloc catch auto-g?n?r?
+                            e1.printStackTrace();
+                        }
+                    }});
+
+
+
             }
         });
 

@@ -12,6 +12,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import metier.LinkMetier;
 import metier.UserMetier;
+import tools.ClipBoard;
 import tools.Const;
 import usercontrol.Context;
 
@@ -38,7 +39,6 @@ public class AddLinkController implements Initializable{
 
     @FXML
     TextField urlTextField;
-
 
     @FXML
     protected  void handleOkLinkButtonOnClick(ActionEvent event){
@@ -68,5 +68,9 @@ public class AddLinkController implements Initializable{
 
     public void initialize(URL location, ResourceBundle resources) {
         ControllerMediator.getInstance().registerAddLinkController(this);
+        if(!ClipBoard.content.equals("")){
+            this.urlTextField.setText(ClipBoard.content);
+        }
+        ClipBoard.content="";
     }
 }
