@@ -73,7 +73,10 @@ public class Downloader extends Task<Long> {
             throws IOException {
         URL url = new URL(fileURL);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-        //httpConn.setRequestProperty("Range", "bytes=" + new File(saveDir).length() + "-");
+        System.out.println(saveDir);
+        File f = new File(saveDir+"/"+fileName);
+        if(f.exists()&&httpConn.getHeaderField(" If-Range")!=null )
+            httpConn.setRequestProperty("Range", "bytes=" + f.length() + "-");
         int responseCode = httpConn.getResponseCode();
 
         // always check HTTP response code first
