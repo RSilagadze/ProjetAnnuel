@@ -62,6 +62,28 @@ public class LoginController implements Initializable {
             dialog.show();
         }
     }
+    @FXML
+    protected void handleAnonymousButtonOnClick(ActionEvent event){
+
+        User user = UserMetier.getUser(loginTextField.getText(),passTextField.getText());
+
+            try {
+                AnchorPane root  = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
+                Stage linkStage = new Stage();
+                linkStage.setTitle("Downloader");
+                linkStage.initStyle(StageStyle.DECORATED);
+                linkStage.setScene(new Scene(root, 1366, 800));
+                linkStage.show();
+            } catch (IOException e) {
+                System.out.println("Impossible d'afficher la main page");
+                e.printStackTrace();
+            }
+            finally {
+                Stage stage = (Stage) this.loginTextField.getScene().getWindow();
+                stage.close();
+            }
+       
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
