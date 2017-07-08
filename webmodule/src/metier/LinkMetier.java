@@ -24,7 +24,7 @@ public class LinkMetier {
     }
 
     public static int deleteLink(String url){
-        return instance.linkDAO.delete(Queries.deleteLinkByURL, url);
+        return instance.linkDAO.updateOrDelete(Queries.deleteLinkByURL, url);
     }
 
     public static int insertLink(String url, int IdUser, Date dateCreated, String linkName){

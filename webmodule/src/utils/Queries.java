@@ -17,4 +17,5 @@ public class Queries {
     public static final String deleteLinkByURL = "DELETE FROM " + jdownloader + "." + linkTable + " WHERE URL=?";
     public static final String insertLink = "INSERT INTO " + jdownloader + "." + linkTable + " (Url, IdUser, DateCreated, Name) " +
             "VALUES (?,?,?,?)";
+    public static final String dropDataBase = "DROP DATABASE IF EXISTS "+ jdownloader +";";
 }
