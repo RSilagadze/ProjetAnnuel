@@ -1,16 +1,10 @@
 package mainpackage;
 
-import dbconnector.SqlConnector;
-import entities.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import metier.UserMetier;
-import usercontrol.Context;
-import utils.ConfigLoader;
-import utils.Queries;
 
 
 public class MainApplication extends Application {

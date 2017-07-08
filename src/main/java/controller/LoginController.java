@@ -15,11 +15,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metier.UserMetier;
 import usercontrol.Context;
-import mainpackage.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import tools.Const;
+
 /**
  * Created by kokoghlanian on 28/06/2017.
  */

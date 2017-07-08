@@ -1,12 +1,9 @@
 package controller;
 
 import Download.Downloader;
-import com.sun.javaws.LaunchDownload;
 import entities.Link;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +31,6 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
 
 public class MainWindowController implements Initializable{
 
@@ -66,7 +62,7 @@ public class MainWindowController implements Initializable{
     ToggleButton deleteButton;
 
     private Downloader selectedTask;
-    private List<Future<?>> future = new ArrayList<Future<?>>();
+    private final List<Future<?>> future = new ArrayList<>();
 
     @FXML
     protected void handleAddLinkMenuItemOnClick(ActionEvent event){
@@ -137,12 +133,10 @@ public class MainWindowController implements Initializable{
     public ExecutorService getExecutorThreadPool(){
         if(downloadTab.getItems() == null)
             return null;
-        return Executors.newFixedThreadPool(10, new ThreadFactory() {
-            public Thread newThread(Runnable r) {
-                Thread t = new Thread(r);
-                t.setDaemon(true);
-                return t;
-            }
+        return Executors.newFixedThreadPool(10, r -> {
+            Thread t = new Thread(r);
+            t.setDaemon(true);
+            return t;
         });
     }
 
@@ -158,8 +152,8 @@ public class MainWindowController implements Initializable{
               }
             }
 
-        for(int i= 0; i< linkListToDownload.size(); i++){
-           launchDownload(DownloaderAdapter.linkToDownloader(linkListToDownload.get(i)));
+        for (Link aLinkListToDownload : linkListToDownload) {
+            launchDownload(DownloaderAdapter.linkToDownloader(aLinkListToDownload));
         }
 
 
@@ -177,27 +171,22 @@ public class MainWindowController implements Initializable{
 
         //downloadTab.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        downloadTab.getSelectionModel().selectedItemProperty().addListener(new ChangeListener(){
+        downloadTab.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedTask = downloadTab.getSelectionModel().getSelectedItem());
 
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                selectedTask = downloadTab.getSelectionModel().getSelectedItem();
-            }
-        });
-
-        statusImageCol.setCellValueFactory(new PropertyValueFactory<Downloader, String>(
+        statusImageCol.setCellValueFactory(new PropertyValueFactory<>(
                 "message"));
 
-        fileNameCol.setCellValueFactory(new PropertyValueFactory<Downloader, String>(
+        fileNameCol.setCellValueFactory(new PropertyValueFactory<>(
                 "title"));
 
         //bind sur les getter de la classe downloader.
-        sizeCol.setCellValueFactory(new PropertyValueFactory<Downloader, Long>(
+        sizeCol.setCellValueFactory(new PropertyValueFactory<>(
                 "value"));
 
-        progressCol.setCellValueFactory(new PropertyValueFactory<Downloader, Double>(
+        progressCol.setCellValueFactory(new PropertyValueFactory<>(
                 "progress"));
         progressCol
-                .setCellFactory(ProgressBarTableCell.<Downloader> forTableColumn());
+                .setCellFactory(ProgressBarTableCell.forTableColumn());
 
         downloadTab.getColumns().setAll(statusImageCol,fileNameCol,sizeCol,progressCol);
 

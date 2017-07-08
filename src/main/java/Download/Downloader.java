@@ -2,11 +2,6 @@ package Download;
 
 import interfaces.IPostback;
 import javafx.concurrent.Task;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -23,9 +18,9 @@ public class Downloader extends Task<Long> {
     private volatile boolean suspended = false;
     private static final int BUFFER_SIZE = 4096;
 
-    private String directory;
-    private String fileName;
-    private String host;
+    private final String directory;
+    private final String fileName;
+    private final String host;
     protected Long size;
     public boolean finish=false;
     public URLConnection website;
@@ -85,13 +80,13 @@ public class Downloader extends Task<Long> {
             String disposition = httpConn.getHeaderField("Content-Disposition");
             String contentType = httpConn.getContentType();
 
-            Long contentLength = Long.valueOf(httpConn.getContentLength());
+            Long contentLength = (long) httpConn.getContentLength();
 
             if(contentLength==-1 && httpConn.getHeaderField("Content-Length")!=null){
                 contentLength = Long.valueOf(httpConn.getHeaderField("Content-Length"));
             }
 
-            this.size = Long.valueOf(contentLength);
+            this.size = contentLength;
             this.updateValue(size);
             for(String s : httpConn.getHeaderFields().keySet()){
                 System.out.println("Fields : "+s+"   "+httpConn.getHeaderFields().get(s));
@@ -141,6 +136,7 @@ public class Downloader extends Task<Long> {
                     }
                 }
                 catch (InterruptedException e) {
+                    System.err.println(e.getMessage());
                 }
                 this.updateMessage("Play");
                 System.out.println(totalBytes);

@@ -2,7 +2,6 @@ package controller;
 
 import Download.Downloader;
 
-import entities.Link;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,9 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import metier.LinkMetier;
-import metier.UserMetier;
 import tools.ClipBoard;
-import tools.Const;
 import usercontrol.Context;
 
 import java.io.File;
@@ -50,7 +47,7 @@ public class AddLinkController implements Initializable{
                 absoluthPathSaveDirectory,
                 fileNameTextField.getText(),
                 urlTextField.getText(),
-                (finished_download) -> {LinkMetier.deleteLink(finished_download.getHost());}
+                (finished_download) -> LinkMetier.deleteLink(finished_download.getHost())
         );
         LinkMetier.insertLink(urlTextField.getText(), Context.getCurrentUser().getId(), new Date(), fileNameTextField.getText());
         ControllerMediator.getInstance().executeDownload(downloader);
