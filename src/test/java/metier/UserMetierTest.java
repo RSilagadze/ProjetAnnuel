@@ -1,22 +1,15 @@
 package metier;
 
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 /**
  * Created by Romaaan on 08/07/2017.
  */
-class UserMetierTest {
-    @Before
-    void setUp() {
-
-    }
-
+public class UserMetierTest {
     @Test
-    void getUser() {
-
+    public void getUser() throws Exception {
     }
 
 }

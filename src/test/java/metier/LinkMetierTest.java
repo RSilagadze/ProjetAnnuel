@@ -1,30 +1,23 @@
 package metier;
 
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 /**
  * Created by Romaaan on 08/07/2017.
  */
-class LinkMetierTest {
-    @Before
-    void setUp() {
-
+public class LinkMetierTest {
+    @Test
+    public void getLinkListByUserId() throws Exception {
     }
 
     @Test
-    void getLinkListByUserId() {
+    public void deleteLink() throws Exception {
     }
 
     @Test
-    void deleteLink() {
-
-    }
-
-    @Test
-    void insertLink() {
+    public void insertLink() throws Exception {
     }
 
 }
