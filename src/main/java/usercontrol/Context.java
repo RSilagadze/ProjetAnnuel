@@ -3,6 +3,7 @@ package usercontrol;
 import dbconnector.SqlConnector;
 import entities.User;
 import entities.UserType;
+import utils.ConfigLoader;
 
 /**
  * Created by Romaaan on 28/06/2017.
@@ -26,7 +27,7 @@ public class Context {
     }
 
     private Context (){
-        SqlConnector.init();
+        ConfigLoader.init("./webmodule/config.properties");
         currentUser = new User();
         currentUser.setUserType(new UserType());
     }

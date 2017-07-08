@@ -1,24 +1,17 @@
 package utils;
 
 import java.io.FileInputStream;
+import java.lang.reflect.Method;
 import java.util.Properties;
 
 /**
  * Created by Romaaan on 28/06/2017.
  */
+
 public class ConfigLoader {
 
     private final Properties properties = new Properties();
     private static final ConfigLoader instance = new ConfigLoader();
-
-    private ConfigLoader(){
-        try {
-            readProperties("./webmodule/config.properties");
-        }
-        catch(Exception e){
-           System.err.println(e.getMessage());
-        }
-    }
 
     private void readProperties(String file) throws Exception{
         try (FileInputStream fis = new FileInputStream(file)){
@@ -29,9 +22,17 @@ public class ConfigLoader {
         }
     }
 
-
-    public static Properties getConfigProperties(){
-        return instance.properties;
+    public static void init (String file){
+        try {
+            instance.readProperties(file);
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
     }
 
+    public static Properties getConfigProperties(){
+        if (instance.properties.isEmpty())
+            init("./webmodule/config.properties");
+        return instance.properties;
+    }
 }

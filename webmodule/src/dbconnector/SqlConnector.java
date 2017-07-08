@@ -10,17 +10,11 @@ import java.sql.DriverManager;
  */
 public class SqlConnector {
 
-    private static String cnString = null;
-
-    public static void init(){
-        cnString = ConfigLoader.getConfigProperties().getProperty("connectionString");
-    }
+    private static final String cnString = ConfigLoader.getConfigProperties().getProperty("connectionString");
 
     public static Connection getNewConnection()  {
         Connection cn = null;
         try{
-            if (cnString == null)
-                init();
             cn = DriverManager.getConnection(cnString);
         }catch (Exception e){
             System.err.println(e.getMessage());
