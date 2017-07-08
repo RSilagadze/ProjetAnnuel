@@ -9,19 +9,15 @@ import java.sql.SQLException;
  */
 public class UserDAO extends AbstractDAO<User>{
 
-    private User getUserData(ResultSet rs)  {
+    private User getUserData(ResultSet rs) throws SQLException {
         User u = new User();
-        try {
-            u.setId(rs.getInt("Id"));
-            u.setIdType(rs.getInt("IdType"));
-            u.setName(rs.getString("Prenom"));
-            u.setLastName(rs.getString("Nom"));
-            u.setLogin(rs.getString("Login"));
-            u.setPass(rs.getString("Pass"));
-            u.setDateRegister(rs.getDate("DateRegister"));
-        }catch(SQLException e){
-            System.err.println(e.getMessage());
-        }
+        u.setId(rs.getInt("Id"));
+        u.setIdType(rs.getInt("IdType"));
+        u.setName(rs.getString("Prenom"));
+        u.setLastName(rs.getString("Nom"));
+        u.setLogin(rs.getString("Login"));
+        u.setPass(rs.getString("Pass"));
+        u.setDateRegister(rs.getDate("DateRegister"));
         return u;
     }
 

@@ -10,17 +10,13 @@ import java.sql.SQLException;
  */
 public class LinkDAO extends AbstractDAO<Link> {
 
-    private Link getLinkData(ResultSet rs)  {
+    private Link getLinkData(ResultSet rs) throws SQLException {
         Link l = new Link();
-        try {
-            l.setId(rs.getInt("Id"));
-            l.setIdUser(rs.getInt("IdUser"));
-            l.setUrl(rs.getString("Url"));
-            l.setDateCreated(rs.getDate("DateCreated"));
-            l.setName(rs.getString("Name"));
-        }catch(SQLException e){
-            System.err.println(e.getMessage());
-        }
+        l.setId(rs.getInt("Id"));
+        l.setIdUser(rs.getInt("IdUser"));
+        l.setUrl(rs.getString("Url"));
+        l.setDateCreated(rs.getDate("DateCreated"));
+        l.setName(rs.getString("Name"));
         return l;
     }
 
