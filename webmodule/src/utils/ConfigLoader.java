@@ -13,16 +13,10 @@ public class ConfigLoader {
 
     private ConfigLoader(){
         try {
-            
-            readProperties("./config.properties");
+            readProperties("./webmodule/config.properties");
         }
-        catch (Exception e){
-            try {
-                readProperties("./webmodule/config.properties");
-            }
-            catch(Exception e1){
-                e1.printStackTrace();
-            }
+        catch(Exception e){
+           System.err.println(e.getMessage());
         }
     }
 
