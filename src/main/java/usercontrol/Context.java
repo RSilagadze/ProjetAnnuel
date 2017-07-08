@@ -1,6 +1,5 @@
 package usercontrol;
 
-import dbconnector.SqlConnector;
 import entities.User;
 import entities.UserType;
 import utils.ConfigLoader;

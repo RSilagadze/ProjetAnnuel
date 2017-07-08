@@ -4,11 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.ConfigLoader;
-import utils.DataBase;
 import utils.Queries;
 import utils.Utils;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Romaaan on 08/07/2017.

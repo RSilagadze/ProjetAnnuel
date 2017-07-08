@@ -7,8 +7,6 @@ import utils.ConfigLoader;
 import utils.Queries;
 import utils.Utils;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Romaaan on 08/07/2017.
  */

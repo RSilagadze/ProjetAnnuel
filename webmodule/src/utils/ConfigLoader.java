@@ -1,7 +1,6 @@
 package utils;
 
 import java.io.FileInputStream;
-import java.lang.reflect.Method;
 import java.util.Properties;
 
 /**

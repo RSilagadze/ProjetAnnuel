@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import utils.ConfigLoader;
-import utils.Utils;
 
 
 public class MainApplication extends Application {
