@@ -31,4 +31,6 @@ public class LinkMetier {
         return instance.linkDAO.insert(Queries.insertLink, url, IdUser, dateCreated, linkName);
     }
 
+
+
 }

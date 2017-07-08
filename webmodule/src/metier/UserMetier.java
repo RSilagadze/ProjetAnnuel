@@ -27,7 +27,6 @@ public class UserMetier {
             u.setUserType(type);
         }else {
             u = new User();
-            u.setUserType(new UserType());
         }
         return u;
     }

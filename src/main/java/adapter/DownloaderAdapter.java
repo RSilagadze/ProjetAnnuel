@@ -11,13 +11,11 @@ import tools.Const;
  */
 public class DownloaderAdapter {
 
-    private static DownloaderAdapter instance = new DownloaderAdapter();
+    private static final DownloaderAdapter instance = new DownloaderAdapter();
     private final IPostback<Downloader> ipostback;
 
     private DownloaderAdapter(){
-        this.ipostback = (downloader) -> {
-            LinkMetier.deleteLink(downloader.getHost());
-        };
+        this.ipostback = (downloader) -> LinkMetier.deleteLink(downloader.getHost());
     }
 
     public static Downloader linkToDownloader(Link link){
