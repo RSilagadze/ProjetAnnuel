@@ -12,9 +12,9 @@ import java.sql.SQLException;
 public class Utils {
 
     public static String readFile(String filename){
-        StringBuilder sb = new StringBuilder(512);
+        StringBuilder sb = new StringBuilder(2048);
         try(InputStream is = new FileInputStream(filename)){
-            BufferedReader br = new BufferedReader(new InputStreamReader(is), 2018);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is), 2048);
             String str;
             while((str = br.readLine()) != null){
                 sb.append(str);

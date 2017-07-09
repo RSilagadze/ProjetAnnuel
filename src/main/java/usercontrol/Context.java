@@ -2,6 +2,7 @@ package usercontrol;
 
 import entities.User;
 import entities.UserType;
+import tools.Const;
 import utils.ConfigLoader;
 
 /**
@@ -26,7 +27,7 @@ public class Context {
     }
 
     private Context (){
-        ConfigLoader.init("./webmodule/config.properties");
+        ConfigLoader.init(Const.WEBMODULE_PATH + "config.properties");
         currentUser = new User();
         currentUser.setUserType(new UserType());
     }
