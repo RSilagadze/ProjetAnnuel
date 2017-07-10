@@ -10,9 +10,6 @@ import java.net.URLConnection;
 import java.util.concurrent.ExecutionException;
 
 
-/**
- * Created by kokoghlanian on 27/04/2017.
- */
 public class Downloader extends Task<Long> {
 
     private volatile boolean suspended = false;
@@ -74,9 +71,7 @@ public class Downloader extends Task<Long> {
             httpConn.setRequestProperty("Range", "bytes=" + f.length() + "-");
         int responseCode = httpConn.getResponseCode();
 
-        // always check HTTP response code first
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            String fileName = "";
             String disposition = httpConn.getHeaderField("Content-Disposition");
             String contentType = httpConn.getContentType();
 
@@ -92,31 +87,10 @@ public class Downloader extends Task<Long> {
                 System.out.println("Fields : "+s+"   "+httpConn.getHeaderFields().get(s));
             }
 
-            if (disposition != null) {
-                // extracts file name from header field
-                int index = disposition.indexOf("filename=");
-                if (index > 0) {
-                    fileName = disposition.substring(index + 10,
-                            disposition.length() - 1);
-                }
-            } else {
-                // extracts file name from URL
-                fileName = fileURL.substring(fileURL.lastIndexOf("/") + 1,
-                        fileURL.length());
-            }
-            if(fileName.equals("")){
-                fileName="default";
-            }
-            System.out.println("Content-Type = " + contentType);
-            System.out.println("Content-Disposition = " + disposition);
-            System.out.println("Content-Length = " + contentLength);
-            System.out.println("fileName = " + fileName);
-
-            // opens input stream from the HTTP connection
+            
             InputStream inputStream = httpConn.getInputStream();
             String saveFilePath = saveDir + File.separator + this.fileName;
 
-            // opens an output stream to save into file
             FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
             int bytesRead = -1;
