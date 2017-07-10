@@ -60,7 +60,7 @@ public class CreateUserSite {
     }
     public static void main(String[] args)
     {
-        displayURL("http://romanrs-001-site1.btempurl.com/Default");
+        displayURL("http://romanrs-001-site1.btempurl.com/Subscribe");
     }
     
 
