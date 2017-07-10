@@ -1,6 +1,7 @@
 package controller;
 
 import Download.Downloader;
+import adapter.DownloaderAdapter;
 import entities.Link;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -10,7 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -19,9 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metier.LinkMetier;
 import tools.ClipBoard;
-import adapter.DownloaderAdapter;
 import usercontrol.Context;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,22 +34,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class MainWindowController implements Initializable{
+public class MainWindowController implements Initializable {
 
     @FXML
     TableView<Downloader> downloadTab;
 
     @FXML
-    TableColumn<Downloader,String> fileNameCol;
+    TableColumn<Downloader, String> fileNameCol;
 
     @FXML
-    TableColumn<Downloader,Long> sizeCol;
+    TableColumn<Downloader, Long> sizeCol;
 
     @FXML
-    TableColumn<Downloader,Double> progressCol;
+    TableColumn<Downloader, Double> progressCol;
 
     @FXML
-    TableColumn<Downloader,String> statusImageCol;
+    TableColumn<Downloader, String> statusImageCol;
 
     @FXML
     MenuItem addLinkMenuItem;
@@ -65,11 +67,11 @@ public class MainWindowController implements Initializable{
     private final List<Future<?>> future = new ArrayList<>();
 
     @FXML
-    protected void handleAddLinkMenuItemOnClick(ActionEvent event){
+    protected void handleAddLinkMenuItemOnClick(ActionEvent event) {
 
         try {
 
-            AnchorPane root  = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/addLinkWindow.fxml"));
+            AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/addLinkWindow.fxml"));
             Stage linkStage = new Stage();
             linkStage.setTitle("Add Link");
             linkStage.initStyle(StageStyle.DECORATED);
@@ -83,17 +85,17 @@ public class MainWindowController implements Initializable{
     }
 
     @FXML
-    protected void handleDeleteItemButtonOnClick(ActionEvent event){
+    protected void handleDeleteItemButtonOnClick(ActionEvent event) {
         downloadTab.getItems().remove(selectedTask);
     }
 
     @FXML
-    protected void handlePauseItemButtonOnClick(ActionEvent event){
-            this.selectedTask.suspend();
+    protected void handlePauseItemButtonOnClick(ActionEvent event) {
+        this.selectedTask.suspend();
     }
 
     @FXML
-    protected void handleResumeItemButtonOnClick(ActionEvent event){
+    protected void handleResumeItemButtonOnClick(ActionEvent event) {
         this.selectedTask.resume();
     }
 
@@ -111,27 +113,27 @@ public class MainWindowController implements Initializable{
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                        synchronized (this) {
+                synchronized (this) {
 
-                            if (downloader.isDone() && !downloader.finish) {
-                                LinkMetier.deleteLink(downloader.getHost());
-                                downloadTab.getItems().remove(downloader);
-                                Stage dialog = new Stage();
-                                dialog.initStyle(StageStyle.DECORATED);
-                                Scene scene = new Scene(new Group(new Text(20, 20, "URL : " + downloader.getHost() + "\n is invalid")), 150, 50);
+                    if (downloader.isDone() && !downloader.finish) {
+                        LinkMetier.deleteLink(downloader.getHost());
+                        downloadTab.getItems().remove(downloader);
+                        Stage dialog = new Stage();
+                        dialog.initStyle(StageStyle.DECORATED);
+                        Scene scene = new Scene(new Group(new Text(20, 20, "URL : " + downloader.getHost() + "\n is invalid")), 150, 50);
 
-                                dialog.setScene(scene);
-                                dialog.show();
-                            }
-                        }
+                        dialog.setScene(scene);
+                        dialog.show();
+                    }
+                }
 
             }
         });
 
     }
 
-    public ExecutorService getExecutorThreadPool(){
-        if(downloadTab.getItems() == null)
+    public ExecutorService getExecutorThreadPool() {
+        if (downloadTab.getItems() == null)
             return null;
         return Executors.newFixedThreadPool(10, r -> {
             Thread t = new Thread(r);
@@ -140,17 +142,17 @@ public class MainWindowController implements Initializable{
         });
     }
 
-    public void launchDownloadList(List<Link> linkListToDownload){
-         
-             int size=linkListToDownload.size();
-            for(int i=0;i<size;i++){
-              for(int j=i+1;j<size;j++){
-                  if(linkListToDownload.get(i).getUrl().equals(linkListToDownload.get(i).getUrl())||linkListToDownload.get(i).getName().equals(linkListToDownload.get(i).getName())){
-                      linkListToDownload.remove(j);
-                      size--;
-                  }
-              }
+    public void launchDownloadList(List<Link> linkListToDownload) {
+
+        int size = linkListToDownload.size();
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                if (linkListToDownload.get(i).getUrl().equals(linkListToDownload.get(i).getUrl()) || linkListToDownload.get(i).getName().equals(linkListToDownload.get(i).getName())) {
+                    linkListToDownload.remove(j);
+                    size--;
+                }
             }
+        }
 
         for (Link aLinkListToDownload : linkListToDownload) {
             launchDownload(DownloaderAdapter.linkToDownloader(aLinkListToDownload));
@@ -159,7 +161,7 @@ public class MainWindowController implements Initializable{
 
     }
 
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources) {
         ControllerMediator.getInstance().registerMainWindowController(this);
 
         try {
@@ -188,7 +190,7 @@ public class MainWindowController implements Initializable{
         progressCol
                 .setCellFactory(ProgressBarTableCell.forTableColumn());
 
-        downloadTab.getColumns().setAll(statusImageCol,fileNameCol,sizeCol,progressCol);
+        downloadTab.getColumns().setAll(statusImageCol, fileNameCol, sizeCol, progressCol);
 
         List<Link> links = LinkMetier.getLinkListByUserId(Context.getCurrentUser().getId());
         launchDownloadList(links);

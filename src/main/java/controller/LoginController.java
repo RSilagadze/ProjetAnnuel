@@ -32,13 +32,13 @@ public class LoginController implements Initializable {
     TextField passTextField;
 
     @FXML
-    protected void handleConnexionButtonOnClick(ActionEvent event){
+    protected void handleConnexionButtonOnClick(ActionEvent event) {
 
-       User user = UserMetier.getUser(loginTextField.getText(),passTextField.getText());
-        if(!user.isEmpty()){
+        User user = UserMetier.getUser(loginTextField.getText(), passTextField.getText());
+        if (!user.isEmpty()) {
             try {
                 Context.setCurrentUser(user);
-                AnchorPane root  = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
+                AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
                 Stage linkStage = new Stage();
                 linkStage.setTitle("Downloader");
                 linkStage.initStyle(StageStyle.DECORATED);
@@ -47,42 +47,43 @@ public class LoginController implements Initializable {
             } catch (IOException e) {
                 System.out.println("Impossible d'afficher la main page");
                 e.printStackTrace();
-            }
-            finally {
+            } finally {
                 Stage stage = (Stage) this.loginTextField.getScene().getWindow();
                 stage.close();
             }
-        }
-        else{
+        } else {
             Stage dialog = new Stage();
             dialog.initStyle(StageStyle.DECORATED);
-            Scene scene = new Scene(new Group(new Text(20, 20, "Login Error!")),150,50);
+            Scene scene = new Scene(new Group(new Text(20, 20, "Login Error!")), 150, 50);
 
             dialog.setScene(scene);
             dialog.show();
         }
     }
+
     @FXML
-    protected void handleAnonymousButtonOnClick(ActionEvent event){
+    protected void handleAnonymousButtonOnClick(ActionEvent event) {
 
-        User user = UserMetier.getUser(loginTextField.getText(),passTextField.getText());
+        User user = UserMetier.getUser(loginTextField.getText(), passTextField.getText());
 
-            try {
-                AnchorPane root  = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
-                Stage linkStage = new Stage();
-                linkStage.setTitle("Downloader");
-                linkStage.initStyle(StageStyle.DECORATED);
-                linkStage.setScene(new Scene(root, 1366, 800));
-                linkStage.show();
-            } catch (IOException e) {
-                System.out.println("Impossible d'afficher la main page");
-                e.printStackTrace();
-            }
-            finally {
-                Stage stage = (Stage) this.loginTextField.getScene().getWindow();
-                stage.close();
-            }
-       
+        try {
+            AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
+            Stage linkStage = new Stage();
+            linkStage.setTitle("Downloader");
+            linkStage.initStyle(StageStyle.DECORATED);
+            linkStage.setScene(new Scene(root, 1366, 800));
+            linkStage.show();
+        } catch (IOException e) {
+            System.out.println("Impossible d'afficher la main page");
+            e.printStackTrace();
+        } finally {
+            Stage stage = (Stage) this.loginTextField.getScene().getWindow();
+            stage.close();
+        }
+
+    }@FXML
+    protected void handleRegisterButtonOnClick(ActionEvent event){
+        tools.CreateUserSite.displayURL();
     }
 
     @Override

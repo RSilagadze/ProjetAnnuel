@@ -1,68 +1,55 @@
+package tools;
+
 import java.io.IOException;
 
 
 public class CreateUserSite {
-	private static final String WIN_ID = "Windows";
+    private static final String WIN_ID = "Windows";
     private static final String WIN_PATH = "rundll32";
     private static final String WIN_FLAG = "url.dll,FileProtocolHandler";
     private static final String UNIX_PATH = "netscape";
     private static final String UNIX_FLAG = "-remote openURL";
-	
-    public static void displayURL(String url)
-    {
-    	
+    private static final String url="http://romanrs-001-site1.btempurl.com/Subscribe";
+
+    public static void displayURL() {
+
         boolean windows = isWindowsPlatform();
         String cmd = null;
-        try
-        {
-            if (windows)
-            {
+        try {
+            if (windows) {
                 cmd = WIN_PATH + " " + WIN_FLAG + " " + url;
                 Process p = Runtime.getRuntime().exec(cmd);
-            }
-            else
-            {
+            } else {
                 cmd = UNIX_PATH + " " + UNIX_FLAG + "(" + url + ")";
                 Process p = Runtime.getRuntime().exec(cmd);
-                try
-                {
+                try {
                     int exitCode = p.waitFor();
-                    if (exitCode != 0)
-                    {
-                       
-                        cmd = UNIX_PATH + " "  + url;
+                    if (exitCode != 0) {
+
+                        cmd = UNIX_PATH + " " + url;
                         p = Runtime.getRuntime().exec(cmd);
                     }
-                }
-                catch(InterruptedException x)
-                {
+                } catch (InterruptedException x) {
                     System.err.println("Error bringing up browser, cmd='" +
-                                       cmd + "'");
+                            cmd + "'");
                     System.err.println("Caught: " + x);
                 }
             }
-        }
-        catch(IOException x)
-        {
+        } catch (IOException x) {
             System.err.println("Could not invoke browser, command=" + cmd);
             System.err.println("Caught: " + x);
         }
     }
-    
-    public static boolean isWindowsPlatform()
-    {
+
+    public static boolean isWindowsPlatform() {
         String os = System.getProperty("os.name");
-        if ( os != null && os.startsWith(WIN_ID))
+        if (os != null && os.startsWith(WIN_ID))
             return true;
         else
             return false;
- 
-    }
-    public static void main(String[] args)
-    {
-        displayURL("http://romanrs-001-site1.btempurl.com/Subscribe");
-    }
-    
 
-	
+    }
+
+
+
 }

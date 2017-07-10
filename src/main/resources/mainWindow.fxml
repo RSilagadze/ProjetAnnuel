@@ -1,77 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindowController">
-   <children>
-      <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="86.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
-                        <MenuBar prefHeight="38.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <menus>
-                              <Menu mnemonicParsing="false" text="File">
-                                 <items>
-                                    <MenuItem fx:id="addLinkMenuItem" mnemonicParsing="false" onAction="#handleAddLinkMenuItemOnClick" text="Add link" />
-                                 </items>
-                              </Menu>
-                              <Menu mnemonicParsing="false" text="Edit">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="Delete" />
-                                 </items>
-                              </Menu>
-                              <Menu mnemonicParsing="false" text="Help">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="About" />
-                                 </items>
-                              </Menu>
-                           </menus>
-                        </MenuBar>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
-                        <ToolBar prefHeight="38.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <items>
-                              <ToggleButton fx:id="playToggleButton" onAction="#handleResumeItemButtonOnClick" mnemonicParsing="false" text="Play">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="DownloadControleGroupe" />
-                                 </toggleGroup>
-                              </ToggleButton>
-                              <ToggleButton fx:id="pauseButton" mnemonicParsing="false" text="Pause" onAction="#handlePauseItemButtonOnClick" toggleGroup="$DownloadControleGroupe" />
-                              <ToggleButton fx:id="deleteButton" onAction="#handleDeleteItemButtonOnClick" mnemonicParsing="false" text="Delete" toggleGroup="$DownloadControleGroupe" />
-                           </items>
-                        </ToolBar>
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-         </top>
-         <center>
-            <TableView fx:id="downloadTab" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-               <columns>
-                  <TableColumn fx:id="statusImageCol" prefWidth="100.0" text="Status"/>
-                  <TableColumn fx:id="fileNameCol" prefWidth="450.0" text="File Name" />
-                  <TableColumn fx:id="sizeCol" minWidth="0.0" prefWidth="500.0" text="Size" />
-                  <TableColumn fx:id="progressCol" minWidth="0.0" prefWidth="350.0" text="Progress" />
-               </columns>
-            </TableView>
-         </center>
-      </BorderPane>
-   </children>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+            prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.MainWindowController">
+    <children>
+        <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="86.0" prefWidth="1280.0"
+                           BorderPane.alignment="CENTER">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <MenuBar prefHeight="38.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0"
+                                         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                         AnchorPane.topAnchor="0.0">
+                                    <menus>
+                                        <Menu mnemonicParsing="false" text="File">
+                                            <items>
+                                                <MenuItem fx:id="addLinkMenuItem" mnemonicParsing="false"
+                                                          onAction="#handleAddLinkMenuItemOnClick" text="Add link"/>
+                                            </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="Edit">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="Delete"/>
+                                            </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="Help">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="About"/>
+                                            </items>
+                                        </Menu>
+                                    </menus>
+                                </MenuBar>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <ToolBar prefHeight="38.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0"
+                                         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                         AnchorPane.topAnchor="0.0">
+                                    <items>
+                                        <ToggleButton fx:id="playToggleButton" onAction="#handleResumeItemButtonOnClick"
+                                                      mnemonicParsing="false" text="Play">
+                                            <toggleGroup>
+                                                <ToggleGroup fx:id="DownloadControleGroupe"/>
+                                            </toggleGroup>
+                                        </ToggleButton>
+                                        <ToggleButton fx:id="pauseButton" mnemonicParsing="false" text="Pause"
+                                                      onAction="#handlePauseItemButtonOnClick"
+                                                      toggleGroup="$DownloadControleGroupe"/>
+                                        <ToggleButton fx:id="deleteButton" onAction="#handleDeleteItemButtonOnClick"
+                                                      mnemonicParsing="false" text="Delete"
+                                                      toggleGroup="$DownloadControleGroupe"/>
+                                    </items>
+                                </ToolBar>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </top>
+            <center>
+                <TableView fx:id="downloadTab" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                    <columns>
+                        <TableColumn fx:id="statusImageCol" prefWidth="100.0" text="Status"/>
+                        <TableColumn fx:id="fileNameCol" prefWidth="450.0" text="File Name"/>
+                        <TableColumn fx:id="sizeCol" minWidth="0.0" prefWidth="500.0" text="Size"/>
+                        <TableColumn fx:id="progressCol" minWidth="0.0" prefWidth="350.0" text="Progress"/>
+                    </columns>
+                </TableView>
+            </center>
+        </BorderPane>
+    </children>
 </AnchorPane>

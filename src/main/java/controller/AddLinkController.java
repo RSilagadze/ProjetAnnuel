@@ -1,7 +1,6 @@
 package controller;
 
 import Download.Downloader;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,13 +17,13 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import static tools.Const.*;
+import static tools.Const.DEFAULT_PATH;
 
 
 /**
  * Created by kokoghlanian on 27/05/2017.
  */
-public class AddLinkController implements Initializable{
+public class AddLinkController implements Initializable {
 
     private String absoluthPathSaveDirectory;
 
@@ -38,11 +37,11 @@ public class AddLinkController implements Initializable{
     TextField urlTextField;
 
     @FXML
-    protected  void handleOkLinkButtonOnClick(ActionEvent event){
+    protected void handleOkLinkButtonOnClick(ActionEvent event) {
 
         Stage stage = (Stage) okLinkButton.getScene().getWindow();
-        if(absoluthPathSaveDirectory==null)
-            this.absoluthPathSaveDirectory= DEFAULT_PATH;
+        if (absoluthPathSaveDirectory == null)
+            this.absoluthPathSaveDirectory = DEFAULT_PATH;
         Downloader downloader = new Downloader(
                 absoluthPathSaveDirectory,
                 fileNameTextField.getText(),
@@ -55,19 +54,19 @@ public class AddLinkController implements Initializable{
     }
 
     @FXML
-    protected  void handleFileChooserButtonOnClick(ActionEvent event) {
+    protected void handleFileChooserButtonOnClick(ActionEvent event) {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Choose download directory");
         File file = directoryChooser.showDialog(new Stage());
-        absoluthPathSaveDirectory  = file.getAbsolutePath();
+        absoluthPathSaveDirectory = file.getAbsolutePath();
     }
 
     public void initialize(URL location, ResourceBundle resources) {
         ControllerMediator.getInstance().registerAddLinkController(this);
-        if(!ClipBoard.content.equals("")){
+        if (!ClipBoard.content.equals("")) {
             this.urlTextField.setText(ClipBoard.content);
         }
-        ClipBoard.content="";
+        ClipBoard.content = "";
     }
 }

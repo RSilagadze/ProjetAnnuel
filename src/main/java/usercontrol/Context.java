@@ -26,7 +26,7 @@ public class Context {
         return instance;
     }
 
-    private Context (){
+    private Context() {
         ConfigLoader.init(Const.WEBMODULE_PATH + "config.properties");
         currentUser = new User();
         currentUser.setUserType(new UserType());

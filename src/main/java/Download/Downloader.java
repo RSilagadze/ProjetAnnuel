@@ -3,7 +3,10 @@ package Download;
 import interfaces.IPostback;
 import javafx.concurrent.Task;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -19,7 +22,7 @@ public class Downloader extends Task<Long> {
     private final String fileName;
     private final String host;
     protected Long size;
-    public boolean finish=false;
+    public boolean finish = false;
     public URLConnection website;
 
     private final IPostback<Downloader> ipostback;
@@ -35,11 +38,11 @@ public class Downloader extends Task<Long> {
         this.ipostback = onpostback;
     }
 
-    public void suspend(){
+    public void suspend() {
         suspended = true;
     }
 
-    public void resume(){
+    public void resume() {
         suspended = false;
         synchronized (this) {
             this.notifyAll();
@@ -51,7 +54,7 @@ public class Downloader extends Task<Long> {
         try {
             updateMessage("Init");
             updateTitle(fileName);
-            downloadFile(host,directory);
+            downloadFile(host, directory);
         } catch (IOException e) {
             synchronized (this) {
                 this.notifyAll();
@@ -66,8 +69,8 @@ public class Downloader extends Task<Long> {
         URL url = new URL(fileURL);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
         System.out.println(saveDir);
-        File f = new File(saveDir+"/"+fileName);
-        if(f.exists()&&httpConn.getHeaderField(" If-Range")!=null )
+        File f = new File(saveDir + "/" + fileName);
+        if (f.exists() && httpConn.getHeaderField(" If-Range") != null)
             httpConn.setRequestProperty("Range", "bytes=" + f.length() + "-");
         int responseCode = httpConn.getResponseCode();
 
@@ -77,17 +80,17 @@ public class Downloader extends Task<Long> {
 
             Long contentLength = (long) httpConn.getContentLength();
 
-            if(contentLength==-1 && httpConn.getHeaderField("Content-Length")!=null){
+            if (contentLength == -1 && httpConn.getHeaderField("Content-Length") != null) {
                 contentLength = Long.valueOf(httpConn.getHeaderField("Content-Length"));
             }
 
             this.size = contentLength;
             this.updateValue(size);
-            for(String s : httpConn.getHeaderFields().keySet()){
-                System.out.println("Fields : "+s+"   "+httpConn.getHeaderFields().get(s));
+            for (String s : httpConn.getHeaderFields().keySet()) {
+                System.out.println("Fields : " + s + "   " + httpConn.getHeaderFields().get(s));
             }
 
-            
+
             InputStream inputStream = httpConn.getInputStream();
             String saveFilePath = saveDir + File.separator + this.fileName;
 
@@ -97,19 +100,18 @@ public class Downloader extends Task<Long> {
             int totalBytes = 0;
             byte[] buffer = new byte[BUFFER_SIZE];
 
-            while ((bytesRead = inputStream.read(buffer)) != -1){
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
                 totalBytes += bytesRead;
-                this.updateProgress(totalBytes,contentLength);
+                this.updateProgress(totalBytes, contentLength);
                 try {
-                    while(suspended){
-                        synchronized(this){
+                    while (suspended) {
+                        synchronized (this) {
                             System.out.println("OnPause");
                             this.updateMessage("Pause");
                             this.wait();
                         }
                     }
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                     System.err.println(e.getMessage());
                 }
                 this.updateMessage("Play");
@@ -126,7 +128,7 @@ public class Downloader extends Task<Long> {
             System.out.println("No file to download. Server replied HTTP code: " + responseCode);
         }
         httpConn.disconnect();
-        finish=true;
+        finish = true;
     }
 
     public String getHost() {

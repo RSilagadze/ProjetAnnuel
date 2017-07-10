@@ -19,10 +19,11 @@ public class ControllerMediator implements IControllerMediator {
     }
 
     public void executeDownload(Downloader downloader) {
-            mainWindowController.launchDownload(downloader);
+        mainWindowController.launchDownload(downloader);
     }
 
-    private ControllerMediator() {}
+    private ControllerMediator() {
+    }
 
     public static ControllerMediator getInstance() {
         return ControllerMediatorHolder.INSTANCE;
