@@ -97,7 +97,7 @@ public class Downloader extends Task<Long> {
             FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
             int bytesRead = -1;
-            int totalBytes = 0;
+            long totalBytes =  f.exists()?f.length():0;
             byte[] buffer = new byte[BUFFER_SIZE];
 
             while ((bytesRead = inputStream.read(buffer)) != -1) {

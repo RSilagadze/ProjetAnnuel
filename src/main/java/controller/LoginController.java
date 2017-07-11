@@ -64,8 +64,6 @@ public class LoginController implements Initializable {
     @FXML
     protected void handleAnonymousButtonOnClick(ActionEvent event) {
 
-        User user = UserMetier.getUser(loginTextField.getText(), passTextField.getText());
-
         try {
             AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
             Stage linkStage = new Stage();

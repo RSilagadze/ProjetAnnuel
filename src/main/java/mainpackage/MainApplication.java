@@ -13,7 +13,7 @@ public class MainApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/loginWindow.fxml"));
         primaryStage.setTitle("Downloader");
-        primaryStage.setScene(new Scene(root, 500, 300));
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
 
