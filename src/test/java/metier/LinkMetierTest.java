@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
+
 import tools.Const;
 import utils.ConfigLoader;
 import utils.Queries;
@@ -22,14 +22,14 @@ import java.util.List;
 public class LinkMetierTest {
 
     @Before
-    void prepareTestBase(){
+    public void prepareTestBase(){
         ConfigLoader.init(Const.WEBMODULE_PATH + "config_test.properties");
         String script = Utils.readFile(Const.WEBMODULE_PATH + "db_script.sql");
         Utils.executeQuery(script);
     }
 
     @Test
-    @DisplayName("Testing number of links for user 1, should be 3")
+    //@DisplayName("Testing number of links for user 1, should be 3")
     public void getLinkListByUserId() throws Exception {
         int linkCount = 3;
         List<Link> lstLink = LinkMetier.getLinkListByUserId(1);
@@ -38,7 +38,7 @@ public class LinkMetierTest {
     }
 
     @Test
-    @DisplayName("Testing deletion of the link with url 'test.com', should return 1")
+    //@DisplayName("Testing deletion of the link with url 'test.com', should return 1")
     public void deleteLink() throws Exception {
         int affectedRows = 1;
         int actualRows = LinkMetier.deleteLink("test.com");
@@ -46,7 +46,7 @@ public class LinkMetierTest {
     }
 
     @Test
-    @DisplayName("Testing insertion of the link with url 'junit_test.com', should return its Id")
+    //@DisplayName("Testing insertion of the link with url 'junit_test.com', should return its Id")
     public void insertLink() throws Exception {
        String url = "junit_test.com";
        String filename = "test";
@@ -57,7 +57,7 @@ public class LinkMetierTest {
     }
 
     @After
-    void deleteTestBase(){
+    public void deleteTestBase(){
         Utils.executeQuery(Queries.dropDataBase);
     }
 }

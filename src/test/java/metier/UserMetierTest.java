@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import tools.Const;
 import utils.ConfigLoader;
 import utils.Queries;
@@ -16,14 +15,14 @@ import utils.Utils;
  */
 public class UserMetierTest {
     @Before
-    void prepareTestBase(){
+    public void prepareTestBase(){
         ConfigLoader.init(Const.WEBMODULE_PATH +"config_test.properties");
         String script = Utils.readFile(Const.WEBMODULE_PATH + "db_script.sql");
         Utils.executeQuery(script);
     }
 
     @Test
-    @DisplayName("Testing selection of a user by its Login and Password, should return non-empty/non-null User()")
+    //@DisplayName("Testing selection of a user by its Login and Password, should return non-empty/non-null User()")
     public void getUser() throws Exception {
         User user = new User();
         user.setId(1);
@@ -39,7 +38,7 @@ public class UserMetierTest {
     }
 
     @After
-    void deleteTestBase(){
+    public void deleteTestBase(){
         Utils.executeQuery(Queries.dropDataBase);
     }
 
