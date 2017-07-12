@@ -17,7 +17,6 @@ public class ConfigLoader {
             properties.load(fis);
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            throw e;
         }
     }
 

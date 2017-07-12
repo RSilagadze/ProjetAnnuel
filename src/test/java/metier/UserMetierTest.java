@@ -22,7 +22,6 @@ public class UserMetierTest {
     }
 
     @Test
-    //@DisplayName("Testing selection of a user by its Login and Password, should return non-empty/non-null User()")
     public void getUser() throws Exception {
         User user = new User();
         user.setId(1);
