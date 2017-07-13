@@ -29,16 +29,13 @@ public class LinkMetierTest {
     }
 
     @Test
-    //@DisplayName("Testing number of links for user 1, should be 3")
     public void getLinkListByUserId() throws Exception {
         int linkCount = 3;
         List<Link> lstLink = LinkMetier.getLinkListByUserId(1);
         Assert.assertTrue("User's 1 links list count",linkCount == lstLink.size());
-
     }
 
     @Test
-    //@DisplayName("Testing deletion of the link with url 'test.com', should return 1")
     public void deleteLink() throws Exception {
         int affectedRows = 1;
         int actualRows = LinkMetier.deleteLink("test.com");
@@ -46,7 +43,6 @@ public class LinkMetierTest {
     }
 
     @Test
-    //@DisplayName("Testing insertion of the link with url 'junit_test.com', should return its Id")
     public void insertLink() throws Exception {
        String url = "junit_test.com";
        String filename = "test";

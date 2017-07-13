@@ -36,6 +36,8 @@ public class AddLinkController implements Initializable {
     @FXML
     TextField urlTextField;
 
+    public boolean isLaunched;
+
     @FXML
     protected void handleOkLinkButtonOnClick(ActionEvent event) {
 
@@ -50,6 +52,7 @@ public class AddLinkController implements Initializable {
         );
         LinkMetier.insertLink(urlTextField.getText(), Context.getCurrentUser().getId(), new Date(), fileNameTextField.getText());
         ControllerMediator.getInstance().executeDownload(downloader);
+        this.isLaunched = false;
         stage.close();
     }
 
@@ -64,6 +67,7 @@ public class AddLinkController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         ControllerMediator.getInstance().registerAddLinkController(this);
+        this.isLaunched = true;
         if (!ClipBoard.content.equals("")) {
             this.urlTextField.setText(ClipBoard.content);
         }

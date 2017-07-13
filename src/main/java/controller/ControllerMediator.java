@@ -14,6 +14,14 @@ public class ControllerMediator implements IControllerMediator {
         this.mainWindowController = controller;
     }
 
+    public AddLinkController getAddLinkController() {
+        return addLinkController;
+    }
+
+    public MainWindowController getMainWindowController() {
+        return mainWindowController;
+    }
+
     public void registerAddLinkController(AddLinkController controller) {
         this.addLinkController = controller;
     }

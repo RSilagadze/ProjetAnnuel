@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class MainApplication extends Application {
 
-    @Override
+    @Override 
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/loginWindow.fxml"));
         primaryStage.setTitle("Downloader");
