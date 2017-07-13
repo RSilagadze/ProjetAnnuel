@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class UtilsTest {
 
-    private final String query = "UPDATE jdownloader_test.Link SET URL='Updated_Test' WHERE Id=1";
+   /* private final String query = "UPDATE jdownloader_test.Link SET URL='Updated_Test' WHERE Id=1";
 
     @Before
     public void prepareTestBase(){
@@ -39,5 +39,5 @@ public class UtilsTest {
     public void deleteTestBase(){
         Utils.executeQuery(Queries.dropDataBase);
     }
-
+*/
 }
