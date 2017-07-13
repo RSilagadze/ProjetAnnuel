@@ -1,5 +1,6 @@
 package tools;
 
+import controller.ControllerMediator;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -26,12 +27,14 @@ public class ClipBoard {
             try {
                 content = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null).getTransferData(DataFlavor.stringFlavor).toString();
 
-                AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/addLinkWindow.fxml"));
-                Stage linkStage = new Stage();
-                linkStage.setTitle("Add Link");
-                linkStage.initStyle(StageStyle.DECORATED);
-                linkStage.setScene(new Scene(root, 500, 100));
-                linkStage.show();
+                if( ControllerMediator.getInstance().getAddLinkController() == null || !ControllerMediator.getInstance().getAddLinkController().isLaunched) {
+                    AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/addLinkWindow.fxml"));
+                    Stage linkStage = new Stage();
+                    linkStage.setTitle("Add Link");
+                    linkStage.initStyle(StageStyle.DECORATED);
+                    linkStage.setScene(new Scene(root, 500, 100));
+                    linkStage.show();
+                }
             } catch (HeadlessException | UnsupportedFlavorException | IOException e1) {
                 // TODO Bloc catch auto-g?n?r?
                 e1.printStackTrace();
