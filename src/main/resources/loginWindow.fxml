@@ -35,11 +35,11 @@
                     <children>
                         <TextField fx:id="loginTextField" prefHeight="31.0" prefWidth="270.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                         <PasswordField fx:id="passTextField" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                        <Label text="User name :" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Password :" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Login :" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Mot de passe :" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Button fx:id="connexionButton" mnemonicParsing="false" onAction="#handleConnexionButtonOnClick" text="Connexion" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                        <Button fx:id="connexionButton1" layoutX="210.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleAnonymousButtonOnClick" text="Anonymous" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                  <Button fx:id="connexionButton11" layoutX="310.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleRegisterButtonOnClick" text="Register" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                        <Button fx:id="connexionButton1" layoutX="210.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleAnonymousButtonOnClick" text="Connexion Anonyme" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                  <Button fx:id="connexionButton11" layoutX="310.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleRegisterButtonOnClick" text="S'inscrire" GridPane.columnIndex="5" GridPane.rowIndex="6" />
                     </children>
                 </GridPane>
             </center>
