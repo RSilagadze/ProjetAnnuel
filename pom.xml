@@ -14,9 +14,6 @@
     <artifactId>jdownloader</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <modules>
-        <module>webmodule</module>
-    </modules>
 
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <dependencies>
