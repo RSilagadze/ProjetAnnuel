@@ -73,6 +73,7 @@ public class MainWindowController implements Initializable {
 
             AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/addLinkWindow.fxml"));
             Stage linkStage = new Stage();
+            AddLinkController.isLaunched=true;
             linkStage.setTitle("Add Link");
             linkStage.initStyle(StageStyle.DECORATED);
             linkStage.setScene(new Scene(root, 500, 100));
