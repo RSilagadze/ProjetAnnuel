@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -70,6 +71,7 @@ public class LoginController implements Initializable {
             linkStage.setTitle("Downloader");
             linkStage.initStyle(StageStyle.DECORATED);
             linkStage.setScene(new Scene(root, 1366, 800));
+            linkStage.getIcons().add(new Image(getClass().getResourceAsStream("/logo.png")));
             linkStage.show();
         } catch (IOException e) {
             System.out.println("Impossible d'afficher la main page");
