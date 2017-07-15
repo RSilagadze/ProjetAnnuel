@@ -36,7 +36,7 @@ public class AddLinkController implements Initializable {
     @FXML
     TextField urlTextField;
 
-    public boolean isLaunched;
+    public static boolean isLaunched;
 
     @FXML
     protected void handleOkLinkButtonOnClick(ActionEvent event) {
