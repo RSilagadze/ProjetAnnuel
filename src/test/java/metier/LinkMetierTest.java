@@ -54,6 +54,8 @@ public class LinkMetierTest {
 
     @After
     public void deleteTestBase(){
-        Utils.executeQuery(Queries.dropDataBase);
+        Utils.executeQuery(Queries.dropLinkTable);
+        Utils.executeQuery(Queries.dropUserTable);
+        Utils.executeQuery(Queries.dropUserTypeTable);
     }
 }

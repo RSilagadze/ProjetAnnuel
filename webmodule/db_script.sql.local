@@ -8,12 +8,11 @@ SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS;
 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION;
 SET NAMES utf8mb4;
 
-USE db_a28053_test;
-DROP TABLE IF EXISTS link;
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS usertype;
+DROP DATABASE IF EXISTS jdownloader_test;
+CREATE DATABASE IF NOT EXISTS jdownloader_test;
+USE jdownloader_test;
 
-CREATE TABLE IF NOT EXISTS `link` (
+CREATE TABLE `link` (
   `Id` int(11) NOT NULL,
   `Url` varchar(1000) DEFAULT NULL,
   `IdUser` int(11) NOT NULL DEFAULT '0',
@@ -29,7 +28,7 @@ INSERT INTO `link` (`Id`, `Url`, `IdUser`, `DateCreated`, `Name`) VALUES
 (63, 'https://a-37.1fichier.com/c42008083', 53, '2017-07-04', 'fichier'),
 (60, 'http://www54.uptobox.com/d/s4yvcfplhwr76xkqjvupg3tdmynpbkp6rjoqsno33ppmsdeszg3zck7sukoyalowoksinfqzylw24sa/The.Fate.of.the.Furious.2017.FRENCH.BDRip.XviD-GZR.WwW.Zone-Telechargement.Ws.avi', 53, '2017-07-04', 'film.avi');
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `Id` int(11) NOT NULL,
   `IdType` int(11) DEFAULT '0',
   `Nom` varchar(500) DEFAULT NULL,
@@ -47,7 +46,7 @@ INSERT INTO `user` (`Id`, `IdType`, `Nom`, `Prenom`, `Login`, `Pass`, `DateRegis
 (52, 1, 'Toto', 'Machin', '12', '12', '2017-06-11'),
 (53, 1, 'Sirac', 'Nicolas', 'esgi', 'esgi', '2017-07-03');
 
-CREATE TABLE IF NOT EXISTS `usertype` (
+CREATE TABLE `usertype` (
   `Id` int(11) NOT NULL,
   `NameStr` varchar(500) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
