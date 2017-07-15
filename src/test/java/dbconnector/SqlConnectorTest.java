@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  */
 public class SqlConnectorTest {
 
-  /*  @Before
+    @Before
     public void prepareTestBase(){
         ConfigLoader.init(Const.WEBMODULE_PATH + "config_test.properties");
     }
@@ -26,5 +26,5 @@ public class SqlConnectorTest {
         Connection cn = SqlConnector.getNewConnection();
         Assert.assertTrue("SqlConnection is not null or closed",cn != null && !cn.isClosed());
     }
-*/
+
 }

@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class LinkMetierTest {
 
-   /* @Before
+    @Before
     public void prepareTestBase(){
         ConfigLoader.init(Const.WEBMODULE_PATH + "config_test.properties");
         String script = Utils.readFile(Const.WEBMODULE_PATH + "db_script.sql");
@@ -55,5 +55,5 @@ public class LinkMetierTest {
     @After
     public void deleteTestBase(){
         Utils.executeQuery(Queries.dropDataBase);
-    }*/
+    }
 }
