@@ -5,7 +5,7 @@ package utils;
  */
 public class Queries {
 
-    private static final DataBase dataBase = new DataBase(ConfigLoader.getConfigProperties().getProperty("downloaderBase"));
+    public static final DataBase dataBase = new DataBase(ConfigLoader.getConfigProperties().getProperty("downloaderBase"));
     private static final DataBase.Table userTable = new DataBase.Table(ConfigLoader.getConfigProperties().getProperty("userTable"));
     private static final DataBase.Table linkTable = new DataBase.Table(ConfigLoader.getConfigProperties().getProperty("linkTable"));
     private static final DataBase.Table userTypeTable = new DataBase.Table(ConfigLoader.getConfigProperties().getProperty("userTypeTable"));
@@ -18,4 +18,8 @@ public class Queries {
     public static final String insertLink = "INSERT INTO " + dataBase + "." + linkTable + " (Url, IdUser, DateCreated, Name) " +
             "VALUES (?,?,?,?)";
     public static final String dropDataBase = "DROP DATABASE IF EXISTS "+ dataBase +";";
+
+    public static final String dropUserTable = "DROP TABLE IF EXISTS "+ dataBase + "." + userTable + ";";
+    public static final String dropLinkTable = "DROP TABLE IF EXISTS "+ dataBase + "."+ linkTable  + ";";
+    public static final String dropUserTypeTable = "DROP TABLE IF EXISTS "+ dataBase + "." + userTypeTable +";";
 }
