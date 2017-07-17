@@ -11,7 +11,7 @@ import utils.ConfigLoader;
 public class Context {
 
     private User currentUser;
-
+    public static int value=0;
     private static final Context instance = new Context();
 
     public static User getCurrentUser() {
@@ -30,5 +30,6 @@ public class Context {
         ConfigLoader.init(Const.WEBMODULE_PATH + "config.properties");
         currentUser = new User();
         currentUser.setUserType(new UserType());
+        value=1;
     }
 }
