@@ -19,7 +19,6 @@ import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -79,7 +78,7 @@ public class MainWindowController implements Initializable {
 
         try {
             System.out.println(file.getAbsolutePath());
-            CryptoUtils.cryptFileInECB(file.getAbsolutePath(),CryptoUtils.generateKey());
+            CryptoUtils.cryptECBFile(file.getAbsolutePath(),CryptoUtils.getKey());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -9,7 +9,7 @@ import java.util.Random;
 public class CryptoUtils
 {
 
-    private final static String userKeyFilePath = ".userKey" ;
+    private final static String userKeyFilePath = "userKey" ;
 
     public static String generateKey()
     {
@@ -104,7 +104,7 @@ public class CryptoUtils
         return result ;
     }
 
-    public static void cryptFileInECB(String path, String key)
+    public static void cryptECBFile(String path, String key)
             throws Exception
     {
         Path file = Paths.get(path) ;
@@ -123,8 +123,8 @@ public class CryptoUtils
         {
             try
             {
-                BufferedReader br = new BufferedReader(new FileReader(file)) ;
-                key = br.readLine() ;
+                Path filePath = Paths.get(userKeyFilePath) ;
+                key = Files.readAllLines(filePath).get(0) ;
             }
 
             catch (FileNotFoundException e)
@@ -144,8 +144,6 @@ public class CryptoUtils
         }
 
         return key ;
-
-       // return "abc";
     }
 
     public static String setKey()
@@ -161,7 +159,7 @@ public class CryptoUtils
 
         catch (IOException e)
         {
-            e.printStackTrace();
+            e.printStackTrace() ;
         }
 
         return key ;

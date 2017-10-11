@@ -2,19 +2,17 @@ package Download ;
 
 import interfaces.IPostback;
 import javafx.concurrent.Task;
-import tools.CryptoUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 
-import static tools.CryptoUtils.cryptFileInECB;
-import static tools.CryptoUtils.generateKey;
+import static tools.CryptoUtils.cryptECBFile;
 import static tools.CryptoUtils.getKey;
 
 
@@ -168,7 +166,7 @@ public class Downloader extends Task<Long>
             outputStream.close() ;
             inputStream.close() ;
 
-            cryptFileInECB(saveFilePath, getKey()) ;
+            cryptECBFile(saveFilePath, getKey()) ;
 
             this.updateMessage("Done") ;
             System.out.println("File downloaded") ;
