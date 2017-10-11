@@ -124,7 +124,7 @@ public class CryptoUtils
             try
             {
                 Path filePath = Paths.get(userKeyFilePath) ;
-                key = Files.readAllLines(filePath).get(0) ;
+                key = new String(Files.readAllBytes(filePath)) ;
             }
 
             catch (FileNotFoundException e)
