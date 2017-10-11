@@ -6,6 +6,9 @@ import entities.User;
 import entities.UserType;
 import utils.Queries;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Created by Romaaan on 27/06/2017.
  */
@@ -21,6 +24,14 @@ public class UserMetier {
     }
 
     public static User getUser(String login, String pass){
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+       pass=new String(digest.digest(pass.getBytes()));
+
         User u = instance.userDAO.get(Queries.getUserByLogPass, login, pass);
         if (u != null && !u.isEmpty()){
             UserType type = instance.typeDAO.get(Queries.getUserTypeByUserID, u.getId());
