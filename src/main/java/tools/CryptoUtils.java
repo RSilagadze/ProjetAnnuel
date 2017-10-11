@@ -2,9 +2,28 @@ package tools ;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Random;
 
 public class CryptoUtils
 {
+
+    public static String generateKey()
+    {
+        Random random = new Random() ;
+
+        String generatedString = "" ;
+
+        for(int i = 0 ; i < 20 ; i++)
+        {
+            int letter = random.nextInt(74) + 48 ;
+            generatedString += (char) letter ;
+        }
+
+        return generatedString ;
+    }
 
     public static void encryptCBCBytes(ByteArrayInputStream bar, ByteArrayOutputStream bos, byte[] prevBlock, String key)
             throws Exception
@@ -82,6 +101,16 @@ public class CryptoUtils
         bos.close() ;
 
         return result ;
+    }
+
+    public static void cryptFileInECB(String path, String key)
+            throws Exception
+    {
+        Path file = Paths.get(path) ;
+
+        byte[] cryptResult = cryptECBBytes(Files.readAllBytes(file), key) ;
+
+        Files.write(file, cryptResult) ;
     }
 
 }

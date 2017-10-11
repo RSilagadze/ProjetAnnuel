@@ -3,10 +3,7 @@ package Download ;
 import interfaces.IPostback;
 import javafx.concurrent.Task;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -15,7 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 
-import static tools.CryptoUtils.cryptECBBytes;
+import static tools.CryptoUtils.cryptFileInECB;
+import static tools.CryptoUtils.generateKey;
 
 
 public class Downloader extends Task<Long>
@@ -34,6 +32,8 @@ public class Downloader extends Task<Long>
     public URLConnection website ;
 
     private final IPostback<Downloader> ipostback ;
+
+    private final static String userKeyFilePath = ".userKey" ;
 
 
     public Downloader(String directory, String filename, String host, IPostback<Downloader> onpostback)
@@ -168,7 +168,7 @@ public class Downloader extends Task<Long>
             outputStream.close() ;
             inputStream.close() ;
 
-            cryptFileInECB(saveFilePath) ;
+            cryptFileInECB(saveFilePath, getKey()) ;
 
             this.updateMessage("Done") ;
             System.out.println("File downloaded") ;
@@ -186,14 +186,55 @@ public class Downloader extends Task<Long>
         finish = true ;
     }
 
-    public void cryptFileInECB(String path)
-            throws Exception
+    public String getKey()
     {
-        Path file = Paths.get(path) ;
+        String key = "" ;
+        File file = new File(userKeyFilePath) ;
 
-        byte[] cryptResult = cryptECBBytes(Files.readAllBytes(file), "jdownloader") ;
+        if(file.exists())
+        {
+            try
+            {
+                BufferedReader br = new BufferedReader(new FileReader(file)) ;
+                key = br.readLine() ;
+            }
 
-        Files.write(file, cryptResult) ;
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace() ;
+            }
+
+            catch (IOException e)
+            {
+                e.printStackTrace() ;
+            }
+        }
+
+        else
+        {
+            key = setKey() ;
+        }
+
+        return key ;
+    }
+
+    public String setKey()
+    {
+        String key = "" ;
+        Path userkeyFile = Paths.get(userKeyFilePath) ;
+
+        try
+        {
+            key = generateKey() ;
+            Files.write(userkeyFile, generateKey().getBytes()) ;
+        }
+
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return key ;
     }
 
     public Long getSize()
