@@ -1,6 +1,7 @@
 package controller;
 
 
+import com.google.common.hash.Hashing;
 import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,9 @@ import usercontrol.Context;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Time;
 import java.util.ResourceBundle;
 
@@ -59,13 +63,24 @@ public class LoginController implements Initializable {
     @FXML
     protected void handleConnexionButtonOnClick(ActionEvent event) {
         if(connectionTry<3) {
-            User user = UserMetier.getUser(loginTextField.getText(), passTextField.getText());
-            if (!user.isEmpty()&&user!=null) {
+            String password=passTextField.getText();
+            try {
+                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                password= Hashing.sha256()
+                        .hashString(password, StandardCharsets.UTF_8)
+                        .toString().toUpperCase();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            System.out.println(password);
+            User user = UserMetier.getUser(loginTextField.getText(),password );
+             if (!user.isEmpty()&&user!=null) {
                 try {
+
                     Context.setCurrentUser(user);
-                    AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
+                    AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/doubleAuthent.fxml"));
                     Stage linkStage = new Stage();
-                    linkStage.setTitle("Downloader");
+                    linkStage.setTitle("Authentification");
                     linkStage.initStyle(StageStyle.DECORATED);
                     linkStage.setScene(new Scene(root, 1366, 800));
                     linkStage.show();

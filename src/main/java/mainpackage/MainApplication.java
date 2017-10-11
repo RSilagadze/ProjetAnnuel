@@ -7,6 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
 
 public class MainApplication extends Application {
 
@@ -23,6 +28,7 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) throws ClassNotFoundException {
         launch(args);
+        //sendMessage("test","test","sirac.nicolas@gmail.com");
     }
 
 }
