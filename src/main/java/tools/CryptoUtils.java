@@ -154,7 +154,7 @@ public class CryptoUtils
         try
         {
             key = generateKey() ;
-            Files.write(userkeyFile, generateKey().getBytes()) ;
+            Files.write(userkeyFile, key.getBytes()) ;
         }
 
         catch (IOException e)
