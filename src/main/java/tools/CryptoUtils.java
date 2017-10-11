@@ -1,7 +1,6 @@
 package tools ;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,6 +8,8 @@ import java.util.Random;
 
 public class CryptoUtils
 {
+
+    private final static String userKeyFilePath = ".userKey" ;
 
     public static String generateKey()
     {
@@ -111,6 +112,59 @@ public class CryptoUtils
         byte[] cryptResult = cryptECBBytes(Files.readAllBytes(file), key) ;
 
         Files.write(file, cryptResult) ;
+    }
+
+    public static String getKey()
+    {
+        String key = "" ;
+        File file = new File(userKeyFilePath) ;
+
+        if(file.exists())
+        {
+            try
+            {
+                BufferedReader br = new BufferedReader(new FileReader(file)) ;
+                key = br.readLine() ;
+            }
+
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace() ;
+            }
+
+            catch (IOException e)
+            {
+                e.printStackTrace() ;
+            }
+        }
+
+        else
+        {
+            key = setKey() ;
+        }
+
+        return key ;
+
+       // return "abc";
+    }
+
+    public static String setKey()
+    {
+        String key = "" ;
+        Path userkeyFile = Paths.get(userKeyFilePath) ;
+
+        try
+        {
+            key = generateKey() ;
+            Files.write(userkeyFile, generateKey().getBytes()) ;
+        }
+
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return key ;
     }
 
 }

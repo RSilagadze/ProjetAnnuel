@@ -2,6 +2,7 @@ package Download ;
 
 import interfaces.IPostback;
 import javafx.concurrent.Task;
+import tools.CryptoUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -14,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 import static tools.CryptoUtils.cryptFileInECB;
 import static tools.CryptoUtils.generateKey;
+import static tools.CryptoUtils.getKey;
 
 
 public class Downloader extends Task<Long>
@@ -32,8 +34,6 @@ public class Downloader extends Task<Long>
     public URLConnection website ;
 
     private final IPostback<Downloader> ipostback ;
-
-    private final static String userKeyFilePath = ".userKey" ;
 
 
     public Downloader(String directory, String filename, String host, IPostback<Downloader> onpostback)
@@ -186,56 +186,7 @@ public class Downloader extends Task<Long>
         finish = true ;
     }
 
-    public String getKey()
-    {
-        String key = "" ;
-        File file = new File(userKeyFilePath) ;
 
-        if(file.exists())
-        {
-            try
-            {
-                BufferedReader br = new BufferedReader(new FileReader(file)) ;
-                key = br.readLine() ;
-            }
-
-            catch (FileNotFoundException e)
-            {
-                e.printStackTrace() ;
-            }
-
-            catch (IOException e)
-            {
-                e.printStackTrace() ;
-            }
-        }
-
-        else
-        {
-            key = setKey() ;
-        }
-
-        return key ;
-    }
-
-    public String setKey()
-    {
-        String key = "" ;
-        Path userkeyFile = Paths.get(userKeyFilePath) ;
-
-        try
-        {
-            key = generateKey() ;
-            Files.write(userkeyFile, generateKey().getBytes()) ;
-        }
-
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        return key ;
-    }
 
     public Long getSize()
     {
