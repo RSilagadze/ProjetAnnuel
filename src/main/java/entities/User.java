@@ -14,6 +14,15 @@ public class User extends DefaultEntity {
     private String login;
     private String pass;
     private Date dateRegister;
+    private String mail;
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
     public Date getDateRegister() {
         return dateRegister;

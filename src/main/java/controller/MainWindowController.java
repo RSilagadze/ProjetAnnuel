@@ -19,12 +19,15 @@ import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metier.LinkMetier;
 import tools.ClipBoard;
+import tools.CryptoUtils;
 import usercontrol.Context;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -66,6 +69,21 @@ public class MainWindowController implements Initializable {
     private Downloader selectedTask;
     private final List<Future<?>> future = new ArrayList<>();
 
+
+    @FXML
+    protected void handledecryptItemButton(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose download directory");
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        try {
+            System.out.println(file.getAbsolutePath());
+            CryptoUtils.cryptECBFile(file.getAbsolutePath(),CryptoUtils.getKey());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     protected void handleAddLinkMenuItemOnClick(ActionEvent event) {
 
@@ -73,6 +91,7 @@ public class MainWindowController implements Initializable {
 
             AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/addLinkWindow.fxml"));
             Stage linkStage = new Stage();
+            AddLinkController.isLaunched=true;
             linkStage.setTitle("Add Link");
             linkStage.initStyle(StageStyle.DECORATED);
             linkStage.setScene(new Scene(root, 500, 100));
@@ -86,7 +105,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     protected void handleDeleteItemButtonOnClick(ActionEvent event) {
-        downloadTab.getItems().remove(selectedTask);
+        downloadTab.getItems().remove(selectedTask) ;
     }
 
     @FXML

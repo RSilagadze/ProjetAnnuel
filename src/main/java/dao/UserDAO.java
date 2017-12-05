@@ -11,6 +11,7 @@ public class UserDAO extends AbstractDAO<User>{
 
     private User getUserData(ResultSet rs) throws SQLException {
         User u = new User();
+        u.setMail(rs.getString("Mail"));
         u.setId(rs.getInt("Id"));
         u.setIdType(rs.getInt("IdType"));
         u.setName(rs.getString("Prenom"));

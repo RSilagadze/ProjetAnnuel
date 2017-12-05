@@ -26,9 +26,13 @@ public class AbstractDAO<T extends DefaultEntity> implements IDAO<T>{
                 entity = reader.readResult(rs);
             }
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+          //  System.err.println(e.getMessage());
+
         }
-        return entity;
+        finally {
+            return entity;
+        }
+
     }
 
     @Override
@@ -46,7 +50,9 @@ public class AbstractDAO<T extends DefaultEntity> implements IDAO<T>{
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return lst;
+        finally {
+            return lst ;
+        }
     }
 
     @Override
@@ -59,7 +65,9 @@ public class AbstractDAO<T extends DefaultEntity> implements IDAO<T>{
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return rows;
+        finally {
+            return rows;
+        }
     }
 
     @Override
@@ -74,7 +82,9 @@ public class AbstractDAO<T extends DefaultEntity> implements IDAO<T>{
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return id;
+        finally {
+            return id;
+        }
     }
 
     private void putParameters(PreparedStatement st, Object...args) throws SQLException {

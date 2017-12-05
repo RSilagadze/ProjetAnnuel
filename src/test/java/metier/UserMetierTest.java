@@ -14,7 +14,7 @@ import utils.Utils;
  * Created by Romaaan on 08/07/2017.
  */
 public class UserMetierTest {
-   /* @Before
+    @Before
     public void prepareTestBase(){
         ConfigLoader.init(Const.WEBMODULE_PATH +"config_test.properties");
         String script = Utils.readFile(Const.WEBMODULE_PATH + "db_script.sql");
@@ -38,7 +38,9 @@ public class UserMetierTest {
 
     @After
     public void deleteTestBase(){
-        Utils.executeQuery(Queries.dropDataBase);
-    }*/
+        Utils.executeQuery(Queries.dropLinkTable);
+        Utils.executeQuery(Queries.dropUserTable);
+        Utils.executeQuery(Queries.dropUserTypeTable);
+    }
 
 }

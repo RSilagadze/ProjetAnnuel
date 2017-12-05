@@ -26,5 +26,9 @@ public class SqlConnectorTest {
         Connection cn = SqlConnector.getNewConnection();
         Assert.assertTrue("SqlConnection is not null or closed",cn != null && !cn.isClosed());
     }
+   /* @Test
+    public void badTest(){
+        Assert.assertTrue(false);
+    }*/
 
 }

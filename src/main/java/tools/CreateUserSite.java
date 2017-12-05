@@ -9,7 +9,7 @@ public class CreateUserSite {
     private static final String WIN_FLAG = "url.dll,FileProtocolHandler";
     private static final String UNIX_PATH = "netscape";
     private static final String UNIX_FLAG = "-remote openURL";
-    private static final String url="http://romanrs-001-site1.btempurl.com/Subscribe";
+    private static final String url="http://vartankoko-001-site1.dtempurl.com/Subscribe";
 
     public static void displayURL() {
 

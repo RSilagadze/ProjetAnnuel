@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ProjetAnnuel4AL:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProjetAnnuel4AL_jar</output-path>
+    <root id="archive" name="ProjetAnnuel4AL.jar">
+      <element id="module-output" name="ProjetAnnuel4AL" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/mysql-connector-java-6.0.6.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.6" />
+      <element id="file-copy" path="$PROJECT_DIR$/mysql-connector-java-6.0.6.jar" />
+    </root>
+  </artifact>
+</component>
