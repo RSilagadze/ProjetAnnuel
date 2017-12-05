@@ -1,3 +1,8 @@
+package tools.RSA;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.PrivateKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -31,6 +36,8 @@ public class Decryption {
 		} catch (IllegalBlockSizeException e) {
 			e.printStackTrace();
 		} catch (BadPaddingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

@@ -1,5 +1,6 @@
 package controller;
 
+import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +15,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
-import java.net.URL;
+import java.net.*;
 import java.util.Properties;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -22,10 +23,13 @@ import java.util.ResourceBundle;
 /**
  * Created by Nicolas_Travail on 11/10/2017.
  */
-public class AuthentController implements Initializable {
+public class AuthentController extends Stage implements Initializable {
+    public User user;
     public static void sendMessage(String subject, String text, String destinataire) {
         // 1 -> Création de la session
         Properties properties = new Properties();
+
+
         properties.setProperty("mail.transport.protocol", "smtp");
         properties.setProperty("mail.smtp.user", "esgi.crypto@gmail.com");
         properties.setProperty("mail.from", "esgi.crypto@gmail.com");
@@ -92,7 +96,7 @@ public class AuthentController implements Initializable {
                     @Override
                     public void run() {
 
-                        sendMessage("Authentification",key,"sirac.nicolas@gmail.com");
+                        sendMessage("Authentification",key,user.getMail());
                     }
                 }).run();
             }
@@ -120,7 +124,7 @@ public class AuthentController implements Initializable {
              @Override
              public void run() {
 
-                 sendMessage("Authentification",key,"sirac.nicolas@gmail.com");
+                 sendMessage("Authentification",key,user.getMail());
              }
          }).run();
     }

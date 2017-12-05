@@ -1,3 +1,9 @@
+package tools.RSA;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.PublicKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.RSAPrivateKeySpec;
@@ -6,11 +12,6 @@ import javax.crypto.BadPaddingException;
 import java.security.InvalidKeyException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.Cipher;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class Encryption {
 
@@ -24,7 +25,7 @@ public class Encryption {
 		try {
 			Cipher cipher = Cipher.getInstance("RSA");
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-			bytes = cipher.doFinal(path.readAllBytes(path));
+			bytes = cipher.doFinal(Files.readAllBytes(path));
 			FileOutputStream file = new FileOutputStream(privateFile);
 			file.write(bytes);
 			file.close();
@@ -37,6 +38,10 @@ public class Encryption {
 		} catch (IllegalBlockSizeException e) {
 			e.printStackTrace();
 		} catch (BadPaddingException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 

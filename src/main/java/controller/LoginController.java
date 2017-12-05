@@ -79,7 +79,8 @@ public class LoginController implements Initializable {
 
                     Context.setCurrentUser(user);
                     AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/doubleAuthent.fxml"));
-                    Stage linkStage = new Stage();
+                    AuthentController linkStage = new AuthentController();
+                    linkStage.user=user;
                     linkStage.setTitle("Authentification");
                     linkStage.initStyle(StageStyle.DECORATED);
                     linkStage.setScene(new Scene(root, 1366, 800));
