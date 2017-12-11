@@ -26,7 +26,7 @@ public class CryptoUtils
         return generatedString ;
     }
 
-    public static void encryptCBCBytes(ByteArrayInputStream bar, ByteArrayOutputStream bos, byte[] prevBlock, String key)
+    public static byte[] encryptCBCBytes(ByteArrayInputStream bar, ByteArrayOutputStream bos, byte[] prevBlock, String key)
             throws Exception
     {
         byte[] keyBytes = key.getBytes() ;
@@ -47,11 +47,13 @@ public class CryptoUtils
                 bos.write(xor) ;
             }
 
-            encryptCBCBytes(bar, bos, prevBlock, key) ;
+            return encryptCBCBytes(bar, bos, prevBlock, key) ;
         }
+
+        return bos.toByteArray() ;
     }
 
-    public static void decryptCBCBytes(ByteArrayInputStream bar, ByteArrayOutputStream bos, byte[] prevBlock, String key)
+    public static byte[] decryptCBCBytes(ByteArrayInputStream bar, ByteArrayOutputStream bos, byte[] prevBlock, String key)
             throws Exception
     {
         byte[] keyBytes = key.getBytes() ;
@@ -71,8 +73,46 @@ public class CryptoUtils
                 bos.write(xor) ;
             }
 
-            decryptCBCBytes(bar, bos, blockBuff, key) ;
+            return decryptCBCBytes(bar, bos, blockBuff, key) ;
         }
+
+        return bos.toByteArray() ;
+    }
+
+    public static void encryptCBCFile(String path, String key) throws Exception
+    {
+        Path file = Paths.get(path) ;
+
+        ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream(128) ;
+
+        try(ByteArrayInputStream byteInStream = new ByteArrayInputStream(Files.readAllBytes(file)))
+        {
+            byte[] prevBlock = generateKey().getBytes() ;
+
+            byte[] cryptResult = encryptCBCBytes(byteInStream, byteOutStream, prevBlock, key) ;
+
+            Files.write(file, cryptResult) ;
+        }
+
+        byteOutStream.close() ;
+    }
+
+    public static void decryptCBCFile(String path, String key) throws Exception
+    {
+        Path file = Paths.get(path) ;
+
+        ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream(128);
+
+        try(ByteArrayInputStream byteInStream = new ByteArrayInputStream(Files.readAllBytes(file)))
+        {
+            byte[] prevBlock = generateKey().getBytes() ;
+
+            byte[] cryptResult = decryptCBCBytes(byteInStream, byteOutStream, prevBlock, key) ;
+
+            Files.write(file, cryptResult) ;
+        }
+
+        byteOutStream.close() ;
     }
 
     public static byte[] cryptECBBytes(byte[] bytes, String key)
@@ -98,7 +138,7 @@ public class CryptoUtils
             }
         }
 
-        byte[] result  = bos.toByteArray() ;
+        byte[] result = bos.toByteArray() ;
         bos.close() ;
 
         return result ;
