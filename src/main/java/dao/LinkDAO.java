@@ -10,6 +10,10 @@ import java.sql.SQLException;
  */
 public class LinkDAO extends AbstractDAO<Link> {
 
+    public LinkDAO() {
+        this.reader = this::getLinkData;
+    }
+
     private Link getLinkData(ResultSet rs) throws SQLException {
         Link l = new Link();
         l.setId(rs.getInt("Id"));
@@ -18,10 +22,6 @@ public class LinkDAO extends AbstractDAO<Link> {
         l.setDateCreated(rs.getDate("DateCreated"));
         l.setName(rs.getString("Name"));
         return l;
-    }
-
-    public LinkDAO() {
-        this.reader = this::getLinkData;
     }
 
 

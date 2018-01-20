@@ -15,6 +15,11 @@ public class User extends DefaultEntity {
     private String pass;
     private Date dateRegister;
     private String mail;
+    private UserType userType;
+
+    public User() {
+        this.userType = new UserType();
+    }
 
     public String getMail() {
         return mail;
@@ -39,8 +44,6 @@ public class User extends DefaultEntity {
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
-
-    private UserType userType;
 
     public int getId() {
         return id;
@@ -90,10 +93,6 @@ public class User extends DefaultEntity {
         this.pass = pass;
     }
 
-    public User(){
-        this.userType = new UserType();
-    }
-
     @Override
     protected Object getKeyComparer() {
         return this.id;
@@ -101,6 +100,6 @@ public class User extends DefaultEntity {
 
     @Override
     public boolean isEmpty() {
-        return this.id <= 0 ;
+        return this.id <= 0;
     }
 }

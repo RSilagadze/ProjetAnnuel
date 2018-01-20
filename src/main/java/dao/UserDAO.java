@@ -1,13 +1,18 @@
 package dao;
 
 import entities.User;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
  * Created by Romaaan on 27/06/2017.
  */
-public class UserDAO extends AbstractDAO<User>{
+public class UserDAO extends AbstractDAO<User> {
+
+    public UserDAO() {
+        this.reader = this::getUserData;
+    }
 
     private User getUserData(ResultSet rs) throws SQLException {
         User u = new User();
@@ -20,9 +25,5 @@ public class UserDAO extends AbstractDAO<User>{
         u.setPass(rs.getString("Pass"));
         u.setDateRegister(rs.getDate("DateRegister"));
         return u;
-    }
-
-    public UserDAO() {
-        this.reader = this::getUserData;
     }
 }

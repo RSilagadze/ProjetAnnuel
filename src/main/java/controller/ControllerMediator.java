@@ -10,6 +10,13 @@ public class ControllerMediator implements IControllerMediator {
     private AddLinkController addLinkController;
     private MainWindowController mainWindowController;
 
+    private ControllerMediator() {
+    }
+
+    public static ControllerMediator getInstance() {
+        return ControllerMediatorHolder.INSTANCE;
+    }
+
     public void registerMainWindowController(MainWindowController controller) {
         this.mainWindowController = controller;
     }
@@ -28,13 +35,6 @@ public class ControllerMediator implements IControllerMediator {
 
     public void executeDownload(Downloader downloader) {
         mainWindowController.launchDownload(downloader);
-    }
-
-    private ControllerMediator() {
-    }
-
-    public static ControllerMediator getInstance() {
-        return ControllerMediatorHolder.INSTANCE;
     }
 
     private static class ControllerMediatorHolder {

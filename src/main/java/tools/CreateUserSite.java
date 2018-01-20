@@ -9,7 +9,7 @@ public class CreateUserSite {
     private static final String WIN_FLAG = "url.dll,FileProtocolHandler";
     private static final String UNIX_PATH = "netscape";
     private static final String UNIX_FLAG = "-remote openURL";
-    private static final String url="http://vartankoko-001-site1.dtempurl.com/Subscribe";
+    private static final String url = "http://vartankoko-001-site1.dtempurl.com/Subscribe";
 
     public static void displayURL() {
 
@@ -27,7 +27,7 @@ public class CreateUserSite {
                     if (exitCode != 0) {
 
                         cmd = UNIX_PATH + " " + url;
-                        p = Runtime.getRuntime().exec(cmd);
+                        Runtime.getRuntime().exec(cmd);
                     }
                 } catch (InterruptedException x) {
                     System.err.println("Error bringing up browser, cmd='" +
@@ -41,15 +41,11 @@ public class CreateUserSite {
         }
     }
 
-    public static boolean isWindowsPlatform() {
+    private static boolean isWindowsPlatform() {
         String os = System.getProperty("os.name");
-        if (os != null && os.startsWith(WIN_ID))
-            return true;
-        else
-            return false;
+        return os != null && os.startsWith(WIN_ID);
 
     }
-
 
 
 }

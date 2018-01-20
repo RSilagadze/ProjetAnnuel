@@ -12,11 +12,11 @@ public class SqlConnector {
 
     private static final String cnString = ConfigLoader.getConfigProperties().getProperty("connectionString");
 
-    public static Connection getNewConnection()  {
+    public static Connection getNewConnection() {
         Connection cn = null;
-        try{
+        try {
             cn = DriverManager.getConnection(cnString);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
         return cn;

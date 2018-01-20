@@ -11,7 +11,7 @@ public abstract class DefaultEntity {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof DefaultEntity && ((DefaultEntity)obj).getKeyComparer().equals(this.getKeyComparer());
+        return obj instanceof DefaultEntity && ((DefaultEntity) obj).getKeyComparer().equals(this.getKeyComparer());
     }
 
     @Override

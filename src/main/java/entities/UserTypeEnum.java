@@ -6,12 +6,12 @@ package entities;
 public enum UserTypeEnum {
     Free(1, "Free"),
     Premium(2, "Preminum"),
-    Default (0, "Default");
+    Default(0, "Default");
 
     private final int id;
     private final String nameStr;
 
-    UserTypeEnum(int id, String nameStr){
+    UserTypeEnum(int id, String nameStr) {
         this.id = id;
         this.nameStr = nameStr;
     }

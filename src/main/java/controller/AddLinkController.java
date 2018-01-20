@@ -25,8 +25,7 @@ import static tools.Const.DEFAULT_PATH;
  */
 public class AddLinkController implements Initializable {
 
-    private String absoluthPathSaveDirectory;
-
+    public static boolean isLaunched;
     @FXML
     Button okLinkButton;
 
@@ -35,8 +34,7 @@ public class AddLinkController implements Initializable {
 
     @FXML
     TextField urlTextField;
-
-    public static boolean isLaunched;
+    private String absoluthPathSaveDirectory;
 
     @FXML
     protected void handleOkLinkButtonOnClick(ActionEvent event) {
@@ -52,7 +50,7 @@ public class AddLinkController implements Initializable {
         );
         LinkMetier.insertLink(urlTextField.getText(), Context.getCurrentUser().getId(), new Date(), fileNameTextField.getText());
         ControllerMediator.getInstance().executeDownload(downloader);
-        this.isLaunched = false;
+        isLaunched = false;
         stage.close();
     }
 
@@ -67,7 +65,7 @@ public class AddLinkController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         ControllerMediator.getInstance().registerAddLinkController(this);
-        this.isLaunched = true;
+        isLaunched = true;
         if (!ClipBoard.content.equals("")) {
             this.urlTextField.setText(ClipBoard.content);
         }

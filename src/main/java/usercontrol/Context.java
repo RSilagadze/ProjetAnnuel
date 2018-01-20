@@ -10,9 +10,16 @@ import utils.ConfigLoader;
  */
 public class Context {
 
-    private User currentUser;
-    public static int value=0;
     private static final Context instance = new Context();
+    private static int value = 0;
+    private User currentUser;
+
+    private Context() {
+        ConfigLoader.init(Const.WEBMODULE_PATH + "config.properties");
+        currentUser = new User();
+        currentUser.setUserType(new UserType());
+        value = 1;
+    }
 
     public static User getCurrentUser() {
         return instance.currentUser;
@@ -24,12 +31,5 @@ public class Context {
 
     public static Context getInstance() {
         return instance;
-    }
-
-    private Context() {
-        ConfigLoader.init(Const.WEBMODULE_PATH + "config.properties");
-        currentUser = new User();
-        currentUser.setUserType(new UserType());
-        value=1;
     }
 }

@@ -5,6 +5,12 @@ package utils;
  */
 public class DataBase {
 
+    private String name;
+
+    DataBase(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return this.name;
@@ -18,13 +24,13 @@ public class DataBase {
         this.name = name;
     }
 
-    private String name;
-
-    public DataBase(String name){
-        this.name = name;
-    }
-
     public static class Table {
+
+        private String name;
+
+        Table(String name) {
+            this.name = name;
+        }
 
         @Override
         public String toString() {
@@ -38,12 +44,6 @@ public class DataBase {
         public void setName(String name) {
             this.name = name;
         }
-
-        private String name;
-
-        public Table(String name){
-            this.name = name;
-        }
     }
-    
+
 }

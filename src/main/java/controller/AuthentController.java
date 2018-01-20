@@ -15,7 +15,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
-import java.net.*;
+import java.net.URL;
 import java.util.Properties;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -25,7 +25,11 @@ import java.util.ResourceBundle;
  */
 public class AuthentController extends Stage implements Initializable {
     public User user;
-    public static void sendMessage(String subject, String text, String destinataire) {
+    @FXML
+    TextField codeField;
+    private String key;
+
+    private static void sendMessage(String subject, String text, String destinataire) {
         // 1 -> Création de la session
         Properties properties = new Properties();
 
@@ -47,11 +51,11 @@ public class AuthentController extends Stage implements Initializable {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        Transport transport=null;
+        Transport transport = null;
         try {
             transport = session.getTransport("smtp");
             transport.connect("esgi.crypto@gmail.com", "passwordcrypto");
-            transport.sendMessage(message, new Address[] { new InternetAddress(destinataire) });
+            transport.sendMessage(message, new Address[]{new InternetAddress(destinataire)});
         } catch (MessagingException e) {
             e.printStackTrace();
         } finally {
@@ -66,41 +70,37 @@ public class AuthentController extends Stage implements Initializable {
 
 
     }
-    public static String generateKey()
-    {
-        Random random = new Random() ;
 
-        String generatedString = "" ;
+    private static String generateKey() {
+        Random random = new Random();
 
-        for(int i = 0 ; i < 6 ; i++)
-        {
-            int letter = random.nextInt(74) + 48 ;
-            generatedString += (char) letter ;
+        StringBuilder generatedString = new StringBuilder();
+
+        for (int i = 0; i < 6; i++) {
+            int letter = random.nextInt(74) + 48;
+            generatedString.append((char) letter);
         }
 
-        return generatedString ;
+        return generatedString.toString();
     }
+
     @FXML
-    TextField codeField;
-    String key;
-    @FXML
-    public void handleAuthentOnClick(ActionEvent event){
-        AnchorPane root = null;
+    public void handleAuthentOnClick(ActionEvent event) {
+        AnchorPane root;
         try {
 
 
-            if(!codeField.getText().equals(key)){
+            if (!codeField.getText().equals(key)) {
 
-                key=generateKey();
+                key = generateKey();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
 
-                        sendMessage("Authentification",key,user.getMail());
+                        sendMessage("Authentification", key, user.getMail());
                     }
                 }).run();
-            }
-            else {
+            } else {
                 root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
                 Stage linkStage = new Stage();
                 linkStage.setTitle("Downloader");
@@ -119,13 +119,13 @@ public class AuthentController extends Stage implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-         key=generateKey();
-         new Thread(new Runnable() {
-             @Override
-             public void run() {
+        key = generateKey();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-                 sendMessage("Authentification",key,user.getMail());
-             }
-         }).run();
+                sendMessage("Authentification", key, user.getMail());
+            }
+        }).run();
     }
 }

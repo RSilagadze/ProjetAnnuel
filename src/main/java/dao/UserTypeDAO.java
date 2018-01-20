@@ -10,15 +10,15 @@ import java.sql.SQLException;
  */
 public class UserTypeDAO extends AbstractDAO<UserType> {
 
+    public UserTypeDAO() {
+        this.reader = this::getUserTypeData;
+    }
+
     private UserType getUserTypeData(ResultSet rs) throws SQLException {
         UserType u = new UserType();
         u.setId(rs.getInt("Id"));
         u.setNameStr(rs.getString("NameStr"));
         return u;
-    }
-
-    public UserTypeDAO() {
-        this.reader = this::getUserTypeData;
     }
 
 }

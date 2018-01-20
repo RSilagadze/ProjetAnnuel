@@ -2,6 +2,8 @@ package controller;
 
 import Download.Downloader;
 import adapter.DownloaderAdapter;
+import crypter.symetric.ECBCrypter;
+import crypter.symetric.SymetricKeyManager;
 import entities.Link;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -24,7 +26,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metier.LinkMetier;
 import tools.ClipBoard;
-import tools.CryptoUtils;
 import usercontrol.Context;
 
 import java.io.File;
@@ -39,46 +40,36 @@ import java.util.concurrent.Future;
 
 public class MainWindowController implements Initializable {
 
+    private final List<Future<?>> future = new ArrayList<>();
     @FXML
     TableView<Downloader> downloadTab;
-
     @FXML
     TableColumn<Downloader, String> fileNameCol;
-
     @FXML
     TableColumn<Downloader, Long> sizeCol;
-
     @FXML
     TableColumn<Downloader, Double> progressCol;
-
     @FXML
     TableColumn<Downloader, String> statusImageCol;
-
     @FXML
     MenuItem addLinkMenuItem;
-
     @FXML
     ToggleButton pauseButton;
-
     @FXML
     ToggleButton playToggleButton;
-
     @FXML
     ToggleButton deleteButton;
-
     private Downloader selectedTask;
-    private final List<Future<?>> future = new ArrayList<>();
-
 
     @FXML
-    protected void handledecryptItemButton(ActionEvent event){
+    protected void handledecryptItemButton(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose download directory");
         File file = fileChooser.showOpenDialog(new Stage());
 
         try {
             System.out.println(file.getAbsolutePath());
-            CryptoUtils.cryptECBFile(file.getAbsolutePath(),CryptoUtils.getKey());
+            ECBCrypter.cryptECBFile(file.getAbsolutePath(), SymetricKeyManager.readKey());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +82,7 @@ public class MainWindowController implements Initializable {
 
             AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/addLinkWindow.fxml"));
             Stage linkStage = new Stage();
-            AddLinkController.isLaunched=true;
+            AddLinkController.isLaunched = true;
             linkStage.setTitle("Add Link");
             linkStage.initStyle(StageStyle.DECORATED);
             linkStage.setScene(new Scene(root, 500, 100));
@@ -105,7 +96,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     protected void handleDeleteItemButtonOnClick(ActionEvent event) {
-        downloadTab.getItems().remove(selectedTask) ;
+        downloadTab.getItems().remove(selectedTask);
     }
 
     @FXML
@@ -151,7 +142,7 @@ public class MainWindowController implements Initializable {
 
     }
 
-    public ExecutorService getExecutorThreadPool() {
+    private ExecutorService getExecutorThreadPool() {
         if (downloadTab.getItems() == null)
             return null;
         return Executors.newFixedThreadPool(10, r -> {
@@ -161,7 +152,7 @@ public class MainWindowController implements Initializable {
         });
     }
 
-    public void launchDownloadList(List<Link> linkListToDownload) {
+    private void launchDownloadList(List<Link> linkListToDownload) {
 
         int size = linkListToDownload.size();
         for (int i = 0; i < size; i++) {
@@ -183,11 +174,7 @@ public class MainWindowController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ControllerMediator.getInstance().registerMainWindowController(this);
 
-        try {
-            ClipBoard.launchClipBoardListner();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        ClipBoard.launchClipBoardListner();
         pauseButton.disableProperty().bind(Bindings.isEmpty(downloadTab.getSelectionModel().getSelectedItems()));
 
         //downloadTab.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

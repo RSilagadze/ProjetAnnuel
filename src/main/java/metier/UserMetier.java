@@ -15,22 +15,21 @@ public class UserMetier {
     private final UserDAO userDAO;
     private final UserTypeDAO typeDAO;
 
-    private UserMetier(){
+    private UserMetier() {
         userDAO = new UserDAO();
         typeDAO = new UserTypeDAO();
     }
 
-    public static User getUser(String login, String pass){
+    public static User getUser(String login, String pass) {
         User u = instance.userDAO.get(Queries.getUserByLogPass, login, pass);
-        if (u != null && !u.isEmpty()){
+        if (u != null && !u.isEmpty()) {
             UserType type = instance.typeDAO.get(Queries.getUserTypeByUserID, u.getId());
             u.setUserType(type);
-        }else {
+        } else {
             u = new User();
         }
         return u;
     }
-
 
 
 }

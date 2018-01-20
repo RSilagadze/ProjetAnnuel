@@ -21,14 +21,14 @@ public class ClipBoard {
 
     public static String content = "";
 
-    public static void launchClipBoardListner() throws InterruptedException {
+    public static void launchClipBoardListner() {
 
 
         Toolkit.getDefaultToolkit().getSystemClipboard().addFlavorListener(e -> Platform.runLater(() -> {
             try {
                 content = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null).getTransferData(DataFlavor.stringFlavor).toString();
 
-                if( ControllerMediator.getInstance().getAddLinkController() == null || !AddLinkController.isLaunched) {
+                if (ControllerMediator.getInstance().getAddLinkController() == null || !AddLinkController.isLaunched) {
                     AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/addLinkWindow.fxml"));
                     Stage linkStage = new Stage();
                     linkStage.setTitle("Add Link");

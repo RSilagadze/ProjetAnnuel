@@ -9,28 +9,28 @@ import java.util.Properties;
 
 public class ConfigLoader {
 
-    private final Properties properties = new Properties();
     private static final ConfigLoader instance = new ConfigLoader();
+    private final Properties properties = new Properties();
 
-    private void readProperties(String file) throws Exception{
-        try (FileInputStream fis = new FileInputStream(file)){
-            properties.load(fis);
+    public static void init(String file) {
+        try {
+            instance.readProperties(file);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public static void init (String file){
-        try {
-            instance.readProperties(file);
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public static Properties getConfigProperties(){
+    public static Properties getConfigProperties() {
         if (instance.properties.isEmpty())
             init("./webmodule/config.properties");
         return instance.properties;
+    }
+
+    private void readProperties(String file) {
+        try (FileInputStream fis = new FileInputStream(file)) {
+            properties.load(fis);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

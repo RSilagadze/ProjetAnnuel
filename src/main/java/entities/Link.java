@@ -9,6 +9,9 @@ public class Link extends DefaultEntity {
 
     private int id;
     private String url;
+    private String name;
+    private Date dateCreated;
+    private int idUser;
 
     public int getIdUser() {
         return idUser;
@@ -17,10 +20,6 @@ public class Link extends DefaultEntity {
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
-
-    private String name;
-    private Date dateCreated;
-    private int idUser;
 
     public int getId() {
         return id;

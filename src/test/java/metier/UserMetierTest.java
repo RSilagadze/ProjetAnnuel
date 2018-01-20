@@ -15,14 +15,14 @@ import utils.Utils;
  */
 public class UserMetierTest {
     @Before
-    public void prepareTestBase(){
-        ConfigLoader.init(Const.WEBMODULE_PATH +"config_test.properties");
+    public void prepareTestBase() {
+        ConfigLoader.init(Const.WEBMODULE_PATH + "config_test.properties");
         String script = Utils.readFile(Const.WEBMODULE_PATH + "db_script.sql");
         Utils.executeQuery(script);
     }
 
     @Test
-    public void getUser() throws Exception {
+    public void getUser() {
         User user = new User();
         user.setId(1);
         user.setIdType(1);
@@ -32,12 +32,12 @@ public class UserMetierTest {
         user.setPass("123");
         User actualUser = UserMetier.getUser(user.getLogin(), user.getPass());
         boolean condition = actualUser.getId() == user.getId() && actualUser.getIdType() == user.getIdType() &&
-                            actualUser.getLastName().equals(user.getLastName()) && actualUser.getName().equals(user.getName());
+                actualUser.getLastName().equals(user.getLastName()) && actualUser.getName().equals(user.getName());
         Assert.assertTrue("User shall be : Id = 1, IdType = 1, Name = Test, LastName = NomTest", condition);
     }
 
     @After
-    public void deleteTestBase(){
+    public void deleteTestBase() {
         Utils.executeQuery(Queries.dropLinkTable);
         Utils.executeQuery(Queries.dropUserTable);
         Utils.executeQuery(Queries.dropUserTypeTable);
