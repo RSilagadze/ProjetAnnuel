@@ -12,7 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.ExecutionException;
 
-import static crypter.symetric.ECBCrypter.cryptECBFile;
+import static crypter.symetric.CBCCrypter.encryptCBCFile;
 import static crypter.symetric.SymetricKeyManager.readKey;
 
 
@@ -137,7 +137,7 @@ public class Downloader extends Task<Long> {
             outputStream.close();
             inputStream.close();
 
-            cryptECBFile(saveFilePath, readKey());
+            encryptCBCFile(saveFilePath, readKey());
 
             this.updateMessage("Done");
             System.out.println("File downloaded");

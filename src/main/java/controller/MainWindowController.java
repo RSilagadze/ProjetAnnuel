@@ -2,7 +2,6 @@ package controller;
 
 import Download.Downloader;
 import adapter.DownloaderAdapter;
-import crypter.symetric.ECBCrypter;
 import crypter.symetric.SymetricKeyManager;
 import entities.Link;
 import javafx.application.Platform;
@@ -38,6 +37,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import static crypter.symetric.CBCCrypter.decryptCBCFile;
+
 public class MainWindowController implements Initializable {
 
     private final List<Future<?>> future = new ArrayList<>();
@@ -69,7 +70,7 @@ public class MainWindowController implements Initializable {
 
         try {
             System.out.println(file.getAbsolutePath());
-            ECBCrypter.cryptECBFile(file.getAbsolutePath(), SymetricKeyManager.readKey());
+            decryptCBCFile(file.getAbsolutePath(), SymetricKeyManager.readKey());
         } catch (Exception e) {
             e.printStackTrace();
         }
