@@ -108,7 +108,7 @@ public class MainWindowController implements Initializable {
                 }
 
                 System.out.println(file.getAbsolutePath());
-                RSACrypter.encryptRSAFile(RSAKeyManager.getUserPublicKeyFilePath(), "crypted_file", file.getAbsolutePath());
+                RSACrypter.encryptRSAFile(RSAKeyManager.getUserPublicKeyFilePath(), file.getAbsolutePath(), file.getAbsolutePath());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -130,7 +130,7 @@ public class MainWindowController implements Initializable {
                 }
 
                 System.out.println(file.getAbsolutePath());
-                RSACrypter.decrpytRSAFile(RSAKeyManager.getUserPrivateKeyFilePath(), "decrypted_file", file.getAbsolutePath());
+                RSACrypter.decrpytRSAFile(RSAKeyManager.getUserPrivateKeyFilePath(), file.getAbsolutePath(), file.getAbsolutePath());
             } catch (Exception e) {
                 e.printStackTrace();
             }
