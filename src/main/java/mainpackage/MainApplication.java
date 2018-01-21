@@ -1,7 +1,5 @@
 package mainpackage;
 
-import crypter.asymetric.RSACrypter;
-import crypter.asymetric.RSAKeyManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,12 +11,7 @@ import javafx.stage.Stage;
 public class MainApplication extends Application {
 
     public static void main(String[] args) {
-        RSAKeyManager.generateKeys();
-
-        RSACrypter.decrpytRSAFile(RSAKeyManager.getUserPrivateKeyFilePath(), "rsa_decrypted", "rsa_crypted");
-
-        //launch(args);
-        //sendMessage("test","test","sirac.nicolas@gmail.com");
+        launch(args);
     }
 
     @Override
