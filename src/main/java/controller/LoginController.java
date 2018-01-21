@@ -40,7 +40,6 @@ public class LoginController implements Initializable {
     protected void handleConnexionButtonOnClick(ActionEvent event) {
         if (connectionTry < 3) {
             String password = passTextField.getText();
-            System.out.println(password);
             try {
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
                 password = Hashing.sha256()
@@ -49,7 +48,6 @@ public class LoginController implements Initializable {
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
-            System.out.println(password);
             User user = UserMetier.getUser(loginTextField.getText(), password);
             if (!user.isEmpty() && user != null) {
                 try {
