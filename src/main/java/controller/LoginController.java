@@ -40,6 +40,7 @@ public class LoginController implements Initializable {
     protected void handleConnexionButtonOnClick(ActionEvent event) {
         if (connectionTry < 3) {
             String password = passTextField.getText();
+            System.out.println(password);
             try {
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
                 password = Hashing.sha256()
@@ -54,9 +55,11 @@ public class LoginController implements Initializable {
                 try {
 
                     Context.setCurrentUser(user);
+                    AuthentController.user = user;
                     AnchorPane root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/doubleAuthent.fxml"));
+
                     AuthentController linkStage = new AuthentController();
-                    linkStage.user = user;
+
                     linkStage.setTitle("Authentification");
                     linkStage.initStyle(StageStyle.DECORATED);
                     linkStage.setScene(new Scene(root, 1366, 800));
@@ -133,17 +136,20 @@ public class LoginController implements Initializable {
         public void run() {
             long time = System.currentTimeMillis();
             long timer = 0;
-            while (timer < 30000) {
+            while (timer < 3000) {
 
                 timer = System.currentTimeMillis() - time;
-                try {
-                    Thread.currentThread().join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
             }
+
+            System.out.println("in");
             LoginController.connectionTry = 0;
             LoginController.threadRun = false;
+            try {
+                Thread.currentThread().join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

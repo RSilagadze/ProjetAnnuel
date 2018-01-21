@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Created by Nicolas_Travail on 11/10/2017.
  */
 public class AuthentController extends Stage implements Initializable {
-    public User user;
+    public static User user;
     @FXML
     TextField codeField;
     private String key;
@@ -123,8 +123,8 @@ public class AuthentController extends Stage implements Initializable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                sendMessage("Authentification", key, user.getMail());
+               // if(user!=null)
+                sendMessage("Authentification", key, AuthentController.user.getMail());
             }
         }).run();
     }
