@@ -53,6 +53,7 @@ public class RSAKeyManager {
 
         try {
             ObjectOutputStream file = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
+
             file.writeObject(specification.getModulus());
             file.writeObject(specification.getPublicExponent());
             file.close();
@@ -74,6 +75,7 @@ public class RSAKeyManager {
 
         try {
             ObjectOutputStream file = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
+
             file.writeObject(specification.getModulus());
             file.writeObject(specification.getPrivateExponent());
             file.close();
@@ -87,10 +89,13 @@ public class RSAKeyManager {
 
         PublicKey publicKey = null;
         try {
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)));
-            RSAPublicKeySpec specification = new RSAPublicKeySpec((BigInteger) ois.readObject(), (BigInteger) ois.readObject());
+            ObjectInputStream file = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)));
+            RSAPublicKeySpec specification = new RSAPublicKeySpec((BigInteger) file.readObject(), (BigInteger) file.readObject());
+
             KeyFactory factory = KeyFactory.getInstance("RSA");
             publicKey = factory.generatePublic(specification);
+
+            file.close();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (InvalidKeySpecException e) {
@@ -109,10 +114,13 @@ public class RSAKeyManager {
 
         PrivateKey privateKey = null;
         try {
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)));
-            RSAPrivateKeySpec specification = new RSAPrivateKeySpec((BigInteger) ois.readObject(), (BigInteger) ois.readObject());
+            ObjectInputStream file = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)));
+            RSAPrivateKeySpec specification = new RSAPrivateKeySpec((BigInteger) file.readObject(), (BigInteger) file.readObject());
+
             KeyFactory factory = KeyFactory.getInstance("RSA");
             privateKey = factory.generatePrivate(specification);
+
+            file.close();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (InvalidKeySpecException e) {
