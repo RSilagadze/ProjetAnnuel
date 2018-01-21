@@ -24,8 +24,14 @@
                                                 <MenuItem fx:id="addLinkMenuItem" mnemonicParsing="false"
                                                           onAction="#handleAddLinkMenuItemOnClick" text="Add link"/>
                                                 <MenuItem fx:id="decryptItem" mnemonicParsing="false"
-                                                          onAction="#handledecryptItemButton"
+                                                          onAction="#handleDecryptItemButton"
                                                           text="Decrypt/Encrypt File"/>
+                                                <MenuItem fx:id="cryptRSAItem" mnemonicParsing="false"
+                                                          onAction="#handleCryptRSAItemButton"
+                                                          text="Crypt RSA File"/>
+                                                <MenuItem fx:id="decryptRSAItem" mnemonicParsing="false"
+                                                          onAction="#handleDecryptRSAItemButton"
+                                                          text="Decrypt RSA File"/>
                                             </items>
                                         </Menu>
                                         <Menu mnemonicParsing="false" text="Edit">

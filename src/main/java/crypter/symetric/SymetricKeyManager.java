@@ -12,6 +12,12 @@ public class SymetricKeyManager {
 
     private final static String userKeyFilePath = "userKey";
 
+
+    public static String getUserKeyFilePath() {
+        return userKeyFilePath;
+    }
+
+
     // Generating
     private static String generateKey() {
         Random random = new Random();
@@ -32,7 +38,7 @@ public class SymetricKeyManager {
     }
 
     // Saving
-    private static String saveKey() {
+    public static String saveKey() {
         String key = "";
         Path userkeyFile = Paths.get(userKeyFilePath);
 

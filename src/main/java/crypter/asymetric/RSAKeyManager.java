@@ -9,6 +9,36 @@ import java.security.spec.RSAPublicKeySpec;
 
 public class RSAKeyManager {
 
+    private final static String userPublicKeyFilePath = "userPublicKey";
+    private final static String userPrivateKeyFilePath = "userPrivateKey";
+
+
+    public static String getUserPublicKeyFilePath() {
+        return userPublicKeyFilePath;
+    }
+
+    public static String getUserPrivateKeyFilePath() {
+        return userPrivateKeyFilePath;
+    }
+
+
+    // Generating
+    public static void generateKeys() {
+
+        KeyPairGenerator keyGenerator = null;
+        try {
+            keyGenerator = KeyPairGenerator.getInstance("asymetric");
+            keyGenerator.initialize(2048);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        KeyPair keysPair = keyGenerator.generateKeyPair();
+        RSAKeyManager.savePrivateKey(keysPair.getPrivate(), userPrivateKeyFilePath);
+        RSAKeyManager.savePublicKey(keysPair.getPublic(), userPublicKeyFilePath);
+
+    }
+
     // Saving
     private static void savePublicKey(PublicKey publicKey, String fileName) {
         RSAPublicKeySpec specification = null;
@@ -95,23 +125,6 @@ public class RSAKeyManager {
             e.printStackTrace();
         }
         return privateKey;
-    }
-
-    // Generating
-    public void generateKeys(String privateFile, String publicFile) {
-
-        KeyPairGenerator keyGenerator = null;
-        try {
-            keyGenerator = KeyPairGenerator.getInstance("asymetric");
-            keyGenerator.initialize(2048);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        KeyPair keysPair = keyGenerator.generateKeyPair();
-        RSAKeyManager.savePrivateKey(keysPair.getPrivate(), privateFile);
-        RSAKeyManager.savePublicKey(keysPair.getPublic(), publicFile);
-
     }
 
 }

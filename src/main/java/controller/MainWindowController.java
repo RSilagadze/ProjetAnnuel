@@ -2,6 +2,9 @@ package controller;
 
 import Download.Downloader;
 import adapter.DownloaderAdapter;
+import crypter.asymetric.RSACrypter;
+import crypter.asymetric.RSAKeyManager;
+import crypter.symetric.SymetricKeyManager;
 import entities.Link;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -55,6 +58,12 @@ public class MainWindowController implements Initializable {
     @FXML
     MenuItem addLinkMenuItem;
     @FXML
+    MenuItem decryptItem;
+    @FXML
+    MenuItem cryptRSAItem;
+    @FXML
+    MenuItem decryptRSAItem;
+    @FXML
     ToggleButton pauseButton;
     @FXML
     ToggleButton playToggleButton;
@@ -63,15 +72,65 @@ public class MainWindowController implements Initializable {
     private Downloader selectedTask;
 
     @FXML
-    protected void handledecryptItemButton(ActionEvent event) {
+    protected void handleDecryptItemButton(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose download directory");
+        fileChooser.setTitle("Choose file");
         File file = fileChooser.showOpenDialog(new Stage());
 
         if (file != null && file.exists()) {
             try {
+                File keyFile = new File(SymetricKeyManager.getUserKeyFilePath());
+
+                if (!keyFile.exists()) {
+                    SymetricKeyManager.saveKey();
+                }
+
                 System.out.println(file.getAbsolutePath());
                 decryptCBCFile(file.getAbsolutePath(), readKey());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    protected void handleCryptRSAItemButton(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose file");
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        if (file != null && file.exists()) {
+            try {
+                File publicKeyFile = new File(RSAKeyManager.getUserPublicKeyFilePath());
+
+                if (!publicKeyFile.exists()) {
+                    RSAKeyManager.generateKeys();
+                }
+
+                System.out.println(file.getAbsolutePath());
+                RSACrypter.encryptRSAFile(RSAKeyManager.getUserPublicKeyFilePath(), "crypted_file", file.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    protected void handleDecryptRSAItemButton(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose file");
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        if (file != null && file.exists()) {
+            try {
+                File privateKeyFile = new File(RSAKeyManager.getUserPrivateKeyFilePath());
+
+                if (!privateKeyFile.exists()) {
+                    RSAKeyManager.generateKeys();
+                }
+
+                System.out.println(file.getAbsolutePath());
+                RSACrypter.decrpytRSAFile(RSAKeyManager.getUserPrivateKeyFilePath(), "decrypted_file", file.getAbsolutePath());
             } catch (Exception e) {
                 e.printStackTrace();
             }
