@@ -26,7 +26,7 @@ public class RSACrypter {
         byte[] bytes;
 
         try {
-            Cipher cipher = Cipher.getInstance("asymetric");
+            Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             bytes = cipher.doFinal(Files.readAllBytes(path));
 
@@ -60,7 +60,7 @@ public class RSACrypter {
         byte[] bytes;
 
         try {
-            Cipher dechiffreur = Cipher.getInstance("asymetric");
+            Cipher dechiffreur = Cipher.getInstance("RSA");
             dechiffreur.init(Cipher.DECRYPT_MODE, privateKey);
             bytes = dechiffreur.doFinal(Files.readAllBytes(path));
 

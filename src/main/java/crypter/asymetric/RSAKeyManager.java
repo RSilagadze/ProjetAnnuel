@@ -27,7 +27,7 @@ public class RSAKeyManager {
 
         KeyPairGenerator keyGenerator = null;
         try {
-            keyGenerator = KeyPairGenerator.getInstance("asymetric");
+            keyGenerator = KeyPairGenerator.getInstance("RSA");
             keyGenerator.initialize(2048);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class RSAKeyManager {
     private static void savePublicKey(PublicKey publicKey, String fileName) {
         RSAPublicKeySpec specification = null;
         try {
-            KeyFactory factory = KeyFactory.getInstance("asymetric");
+            KeyFactory factory = KeyFactory.getInstance("RSA");
             specification = factory.getKeySpec(publicKey, RSAPublicKeySpec.class);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class RSAKeyManager {
     private static void savePrivateKey(PrivateKey privateKey, String fileName) {
         RSAPrivateKeySpec specification = null;
         try {
-            KeyFactory factory = KeyFactory.getInstance("asymetric");
+            KeyFactory factory = KeyFactory.getInstance("RSA");
             specification = factory.getKeySpec(privateKey, RSAPrivateKeySpec.class);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -89,7 +89,7 @@ public class RSAKeyManager {
         try {
             ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)));
             RSAPublicKeySpec specification = new RSAPublicKeySpec((BigInteger) ois.readObject(), (BigInteger) ois.readObject());
-            KeyFactory factory = KeyFactory.getInstance("asymetric");
+            KeyFactory factory = KeyFactory.getInstance("RSA");
             publicKey = factory.generatePublic(specification);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -111,7 +111,7 @@ public class RSAKeyManager {
         try {
             ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)));
             RSAPrivateKeySpec specification = new RSAPrivateKeySpec((BigInteger) ois.readObject(), (BigInteger) ois.readObject());
-            KeyFactory factory = KeyFactory.getInstance("asymetric");
+            KeyFactory factory = KeyFactory.getInstance("RSA");
             privateKey = factory.generatePrivate(specification);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

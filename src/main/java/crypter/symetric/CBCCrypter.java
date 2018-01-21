@@ -19,7 +19,7 @@ public class CBCCrypter {
 
         int bRead;
 
-        while ((bRead = bar.read(blockBuff, 0, blockLength)) > 0) {
+        if ((bRead = bar.read(blockBuff, 0, blockLength)) > 0) {
             for (int i = 0; i < bRead; i++) {
                 int xor = (int) prevBlock[i] ^ (int) blockBuff[i] ^ (int) keyBytes[i];
                 prevBlock[i] = (byte) xor;
@@ -43,7 +43,7 @@ public class CBCCrypter {
 
         int bRead;
 
-        while ((bRead = bar.read(blockBuff, 0, blockLength)) > 0) {
+        if ((bRead = bar.read(blockBuff, 0, blockLength)) > 0) {
             for (int i = 0; i < bRead; i++) {
                 int xor = (int) blockBuff[i] ^ (int) keyBytes[i] ^ (int) prevBlock[i];
                 bos.write(xor);
@@ -67,7 +67,7 @@ public class CBCCrypter {
         int bRead;
 
         if (action.equals("encrypt")) {
-            while ((bRead = bar.read(blockBuff, 0, blockLength)) > 0) {
+            if ((bRead = bar.read(blockBuff, 0, blockLength)) > 0) {
                 for (int i = 0; i < bRead; i++) {
                     int xor = (int) prevBlock[i] ^ (int) blockBuff[i] ^ (int) keyBytes[i];
                     prevBlock[i] = (byte) xor;
@@ -77,7 +77,7 @@ public class CBCCrypter {
                 return encryptCBCBytes(bar, bos, prevBlock, key);
             }
         } else if (action.equals("decrypt")) {
-            while ((bRead = bar.read(blockBuff, 0, blockLength)) > 0) {
+            if ((bRead = bar.read(blockBuff, 0, blockLength)) > 0) {
                 for (int i = 0; i < bRead; i++) {
                     int xor = (int) blockBuff[i] ^ (int) keyBytes[i] ^ (int) prevBlock[i];
                     bos.write(xor);
@@ -101,8 +101,8 @@ public class CBCCrypter {
 
         try (ByteArrayInputStream byteInStream = new ByteArrayInputStream(Files.readAllBytes(file))) {
             // Par soucis de facilité, au lieu de mettre le vecteur d'initialisation à la fin du fichier,
-            // nous utilisons la clé comme vecteur
-            byte[] prevBlock = key.getBytes();
+            // nous utilisons un vecteur d'initialisation donné
+            byte[] prevBlock = ("projet_cryptographie").getBytes();
 
             byte[] cryptResult = encryptCBCBytes(byteInStream, byteOutStream, prevBlock, key);
 
@@ -118,7 +118,7 @@ public class CBCCrypter {
         ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream(128);
 
         try (ByteArrayInputStream byteInStream = new ByteArrayInputStream(Files.readAllBytes(file))) {
-            byte[] prevBlock = key.getBytes();
+            byte[] prevBlock = ("projet_cryptographie").getBytes();
 
             byte[] cryptResult = decryptCBCBytes(byteInStream, byteOutStream, prevBlock, key);
 
@@ -135,8 +135,8 @@ public class CBCCrypter {
 
         try (ByteArrayInputStream byteInStream = new ByteArrayInputStream(Files.readAllBytes(file))) {
             // Par soucis de facilité, au lieu de mettre le vecteur d'initialisation à la fin du fichier,
-            // nous utilisons la clé comme vecteur
-            byte[] prevBlock = key.getBytes();
+            // nous utilisons un vecteur d'initialisation donné
+            byte[] prevBlock = ("projetCrypto").getBytes();
 
             byte[] cryptResult;
 
