@@ -130,7 +130,7 @@ public class AuthentController extends Stage implements Initializable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-               // if(user!=null)
+                // if(user!=null)
                 sendMessage("Authentification", key, AuthentController.user.getMail());
             }
         }).run();

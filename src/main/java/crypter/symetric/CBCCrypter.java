@@ -55,7 +55,8 @@ public class CBCCrypter {
         return bos.toByteArray();
     }
 
-    // Méthode permettant le choix entre le chiffrement ou le déchiffrement
+    // Méthode permettant le choix entre le chiffrement ou le déchiffrement de bytes
+    // Non utilisée
     private static byte[] encryptOrDecryptCBCBytes(String action, ByteArrayInputStream bar, ByteArrayOutputStream bos, byte[] prevBlock, String key) throws Exception {
         byte[] keyBytes = key.getBytes();
         int blockLength = keyBytes.length;
@@ -128,6 +129,8 @@ public class CBCCrypter {
         byteOutStream.close();
     }
 
+    // Méthode permettant le choix entre le chiffrement ou le déchiffrement de fichiers
+    // Non utilisée
     public static void encryptOrDecryptCBCFile(String action, String path, String key) throws Exception {
         Path file = Paths.get(path);
 

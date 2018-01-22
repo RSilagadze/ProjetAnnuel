@@ -40,6 +40,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static crypter.symetric.CBCCrypter.decryptCBCFile;
+import static crypter.symetric.CBCCrypter.encryptCBCFile;
 import static crypter.symetric.SymetricKeyManager.readKey;
 
 public class MainWindowController implements Initializable {
@@ -58,7 +59,9 @@ public class MainWindowController implements Initializable {
     @FXML
     MenuItem addLinkMenuItem;
     @FXML
-    MenuItem decryptItem;
+    MenuItem encryptCBCItem;
+    @FXML
+    MenuItem decryptCBCItem;
     @FXML
     MenuItem cryptRSAItem;
     @FXML
@@ -72,7 +75,29 @@ public class MainWindowController implements Initializable {
     private Downloader selectedTask;
 
     @FXML
-    protected void handleDecryptItemButton(ActionEvent event) {
+    protected void handleEncryptCBCItemButton(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose file");
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        if (file != null && file.exists()) {
+            try {
+                File keyFile = new File(SymetricKeyManager.getUserKeyFilePath());
+
+                if (!keyFile.exists()) {
+                    SymetricKeyManager.saveKey();
+                }
+
+                System.out.println(file.getAbsolutePath());
+                encryptCBCFile(file.getAbsolutePath(), readKey());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    protected void handleDecryptCBCItemButton(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose file");
         File file = fileChooser.showOpenDialog(new Stage());
@@ -94,7 +119,7 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    protected void handleCryptRSAItemButton(ActionEvent event) {
+    protected void handleEncryptRSAItemButton(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose file");
         File file = fileChooser.showOpenDialog(new Stage());
@@ -104,7 +129,7 @@ public class MainWindowController implements Initializable {
                 File publicKeyFile = new File(RSAKeyManager.getUserPublicKeyFilePath());
 
                 if (!publicKeyFile.exists()) {
-                    RSAKeyManager.generateKeys();
+                    RSAKeyManager.saveKeys();
                 }
 
                 System.out.println(file.getAbsolutePath());
@@ -126,7 +151,7 @@ public class MainWindowController implements Initializable {
                 File privateKeyFile = new File(RSAKeyManager.getUserPrivateKeyFilePath());
 
                 if (!privateKeyFile.exists()) {
-                    RSAKeyManager.generateKeys();
+                    RSAKeyManager.saveKeys();
                 }
 
                 System.out.println(file.getAbsolutePath());

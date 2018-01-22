@@ -23,12 +23,15 @@
                                             <items>
                                                 <MenuItem fx:id="addLinkMenuItem" mnemonicParsing="false"
                                                           onAction="#handleAddLinkMenuItemOnClick" text="Add link"/>
-                                                <MenuItem fx:id="decryptItem" mnemonicParsing="false"
-                                                          onAction="#handleDecryptItemButton"
-                                                          text="Decrypt/Encrypt File"/>
+                                                <MenuItem fx:id="decryptCBCItem" mnemonicParsing="false"
+                                                          onAction="#handleEncryptCBCItemButton"
+                                                          text="Encrypt CBC File"/>
+                                                <MenuItem fx:id="encryptCBCItem" mnemonicParsing="false"
+                                                          onAction="#handleDecryptCBCItemButton"
+                                                          text="Decrypt CBC File"/>
                                                 <MenuItem fx:id="cryptRSAItem" mnemonicParsing="false"
-                                                          onAction="#handleCryptRSAItemButton"
-                                                          text="Crypt RSA File"/>
+                                                          onAction="#handleEncryptRSAItemButton"
+                                                          text="Encrypt RSA File"/>
                                                 <MenuItem fx:id="decryptRSAItem" mnemonicParsing="false"
                                                           onAction="#handleDecryptRSAItemButton"
                                                           text="Decrypt RSA File"/>

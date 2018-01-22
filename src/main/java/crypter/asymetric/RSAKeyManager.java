@@ -23,7 +23,7 @@ public class RSAKeyManager {
 
 
     // Generating
-    public static void generateKeys() {
+    public static void saveKeys() {
 
         KeyPairGenerator keyGenerator = null;
         try {
@@ -34,13 +34,13 @@ public class RSAKeyManager {
         }
 
         KeyPair keysPair = keyGenerator.generateKeyPair();
-        RSAKeyManager.savePrivateKey(keysPair.getPrivate(), userPrivateKeyFilePath);
-        RSAKeyManager.savePublicKey(keysPair.getPublic(), userPublicKeyFilePath);
+        RSAKeyManager.generatePublicKey(keysPair.getPublic(), userPublicKeyFilePath);
+        RSAKeyManager.generatePrivateKey(keysPair.getPrivate(), userPrivateKeyFilePath);
 
     }
 
     // Saving
-    private static void savePublicKey(PublicKey publicKey, String fileName) {
+    private static void generatePublicKey(PublicKey publicKey, String fileName) {
         RSAPublicKeySpec specification = null;
         try {
             KeyFactory factory = KeyFactory.getInstance("RSA");
@@ -62,7 +62,7 @@ public class RSAKeyManager {
         }
     }
 
-    private static void savePrivateKey(PrivateKey privateKey, String fileName) {
+    private static void generatePrivateKey(PrivateKey privateKey, String fileName) {
         RSAPrivateKeySpec specification = null;
         try {
             KeyFactory factory = KeyFactory.getInstance("RSA");
