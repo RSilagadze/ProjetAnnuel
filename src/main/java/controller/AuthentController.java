@@ -5,9 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -92,7 +94,6 @@ public class AuthentController extends Stage implements Initializable {
 
             if (!codeField.getText().equals(key)) {
 
-                key = generateKey();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -100,6 +101,12 @@ public class AuthentController extends Stage implements Initializable {
                         sendMessage("Authentification", key, user.getMail());
                     }
                 }).run();
+                Stage dialog = new Stage();
+                dialog.initStyle(StageStyle.DECORATED);
+                Scene scene = new Scene(new Group(new Text(20, 20, "Login Error!")), 150, 50);
+                dialog.setScene(scene);
+                dialog.show();
+                key = generateKey();
             } else {
                 root = FXMLLoader.load(mainpackage.MainApplication.class.getResource("/mainWindow.fxml"));
                 Stage linkStage = new Stage();

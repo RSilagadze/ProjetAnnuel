@@ -60,7 +60,7 @@ public class LoginController implements Initializable {
 
                     linkStage.setTitle("Authentification");
                     linkStage.initStyle(StageStyle.DECORATED);
-                    linkStage.setScene(new Scene(root, 1366, 800));
+                    linkStage.setScene(new Scene(root, 800, 600));
                     linkStage.show();
                 } catch (IOException e) {
                     System.out.println("Impossible d'afficher la main page");
@@ -134,7 +134,7 @@ public class LoginController implements Initializable {
         public void run() {
             long time = System.currentTimeMillis();
             long timer = 0;
-            while (timer < 3000) {
+            while (timer < 30000) {
 
                 timer = System.currentTimeMillis() - time;
 
